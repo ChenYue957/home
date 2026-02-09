@@ -18,5 +18,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           source: "*"
-          target: "/vol1/@appshare/1Panel/1panel/www/sites/chenyue.art/index/"
+          target: "/vol1/@appshare/1Panel/1panel/www/sites/chenyue.fun/index/"
           rm: true  # 先清空再上传，保持完全一致
