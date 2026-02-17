@@ -1252,14 +1252,14 @@ html[data-theme="dack"] .select-trigger {
     top: 20px;
     right: 20px;
     width: 340px;
-    background: rgba(20, 20, 25, 0.98);
+    background: var(--item-bg-color, rgba(20, 20, 25, 0.98));
     border-radius: 12px;
     padding: 20px;
     z-index: 9999;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
     transform: translateX(150%);
     transition: transform 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
 }
 
 .domain-tip.show {
@@ -1281,7 +1281,7 @@ html[data-theme="dack"] .select-trigger {
 .tip-title {
     font-size: 16px;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-color, #fff);
     letter-spacing: 0.5px;
 }
 
@@ -1292,13 +1292,13 @@ html[data-theme="dack"] .select-trigger {
 .tip-body p {
     margin: 6px 0;
     font-size: 13px;
-    color: #888;
+    color: var(--text-color-secondary, #888);
     word-break: break-all;
     line-height: 1.6;
 }
 
 .tip-body span {
-    color: #ccc;
+    color: var(--text-color, #ccc);
     font-weight: 500;
 }
 
@@ -1322,7 +1322,7 @@ html[data-theme="dack"] .select-trigger {
 
 .tip-jump-row {
     padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.06));
 }
 
 .tip-btn {
@@ -1337,38 +1337,38 @@ html[data-theme="dack"] .select-trigger {
     border: none;
     background: transparent;
     text-decoration: none;
-    color: #fff;
+    color: var(--text-color, #fff);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--project-item-bg-color, rgba(255, 255, 255, 0.1));
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--project-item-hover-color, rgba(255, 255, 255, 0.15));
 }
 
 .btn-nomore {
     background: transparent;
-    color: #666;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color-secondary, #666);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
 }
 
 .btn-nomore:hover {
-    color: #999;
-    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-color, #999);
+    border-color: var(--border-color, rgba(255, 255, 255, 0.2));
 }
 
 .btn-jump {
-    background: #1a1a1f;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #aaa;
+    background: var(--main-bg-color, #1a1a1f);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    color: var(--text-color-secondary, #aaa);
 }
 
 .btn-jump:hover {
-    background: #25252a;
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.15);
+    background: var(--project-item-hover-color, #25252a);
+    color: var(--text-color, #fff);
+    border-color: var(--border-color, rgba(255, 255, 255, 0.15));
 }
 
 /* 移动端 */
