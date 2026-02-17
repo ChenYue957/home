@@ -335,7 +335,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const isOfficial = officialDomains.some(d => host.includes(d));
                 
                 if (!isOfficial) {
-                    officialLineEl.innerHTML = '推荐访问：<span style="color: #f87171;">当前为非官方域名</span>';
+                    // 非官方域名：显示推荐地址
+                    officialLineEl.innerHTML = '推荐访问：<span id="officialUrl" style="color: #16a34a;">https://chenyue.top</span>';
                 }
                 
                 setTimeout(() => {
