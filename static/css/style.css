@@ -376,6 +376,7 @@ body {
 .gradientText {
 
     -webkit-background-clip: text;
+    background-clip: text;  
     -webkit-text-fill-color: transparent;
     background-size: 200%;
     background-position: 0%;
@@ -854,6 +855,7 @@ footer {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    user-select: none;   
 }
 
 .onoffswitch-checkbox {
