@@ -326,3 +326,28 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
 });
+
+
+// 动态设置博客链接
+(function() {
+    const blogLink = document.getElementById('blogLink');
+    if (!blogLink) {
+        console.warn('blogLink 元素未找到');
+        return;
+    }
+
+    const host = window.location.host;
+    const pathname = window.location.pathname;
+
+    let blogUrl = 'https://blog.chenyue.top'; // 默认
+
+    if (host.includes('chenyue.top')) {
+        blogUrl = 'https://blog.chenyue.top';
+    } else if (host.includes('chenyue.art:957')) {
+        blogUrl = 'https://blog.chenyue.art:958';
+    } else if (host.includes('github.io') && pathname.includes('/home/')) {
+        blogUrl = 'https://chenyue957.github.io/blog/';
+    }
+
+    blogLink.href = blogUrl;        
+})();
