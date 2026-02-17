@@ -1442,3 +1442,37 @@ html[data-theme="dack"] .btn-jump:hover {
         padding: 12px 0;
     }
 }
+
+/* 不再提示按钮高亮 - 官方域名 */
+.btn-nomore.highlight {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    border-color: transparent;
+    font-weight: 600;
+}
+
+.btn-nomore.highlight:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+html[data-theme="dack"] .btn-nomore.highlight {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #000;
+}
+
+html[data-theme="dack"] .btn-nomore.highlight:hover {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+/* 安全域名绿色 */
+#officialUrl {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+html[data-theme="dack"] #officialUrl {
+    color: #4ade80;
+}

@@ -327,6 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tipEl = document.getElementById('domainTip');
                 const currentUrlEl = document.getElementById('currentUrl');
                 const officialLineEl = document.getElementById('officialLine');
+                const noMoreBtn = document.querySelector('.btn-nomore');
                 
                 currentUrlEl.textContent = window.location.href;
                 
@@ -334,9 +335,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const officialDomains = ['chenyue.top', 'chenyue.art:957', 'chenyue957.github.io'];
                 const isOfficial = officialDomains.some(d => host.includes(d));
                 
-                if (!isOfficial) {
-                    // 非官方域名：显示推荐地址
-                    officialLineEl.innerHTML = '推荐访问：<span id="officialUrl" style="color: #16a34a;">https://chenyue.top</span>';
+                if (isOfficial) {
+                    // 官方域名：安全提示，高亮不再提示
+                    officialLineEl.innerHTML = '当前访问：<span id="officialUrl" style="color: #16a34a;">安全域名</span>';
+                    noMoreBtn.classList.add('highlight');
+                } else {
+                    // 非官方域名：显示推荐地址，不高亮
+                    officialLineEl.innerHTML = '推荐访问：<span id="officialUrl">https://chenyue.top</span>';
+                    noMoreBtn.classList.remove('highlight');
                 }
                 
                 setTimeout(() => {
