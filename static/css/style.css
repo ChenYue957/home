@@ -15,11 +15,7 @@
 
 * {
     font-family: "b", "a", sans-serif;
-
-}
-
-* {
-     cursor: url('./static/sb.cur'),auto;
+    cursor: url('../sb.cur'), auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -1096,8 +1092,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2px;
-    width: 36px;
+    gap: 4px;
+    width: 40px;
     height: 32px;
     padding: 4px;
     background: rgba(255, 255, 255, 0.1);
@@ -1249,6 +1245,10 @@ html[data-theme="dack"] .select-trigger {
 }
 
 /* ===== 域名安全提示 ===== */
+.domain-tip,
+.domain-tip * {
+    cursor: url('../sb.cur'), auto !important;
+}
 .domain-tip {
     position: fixed;
     top: 20px;
@@ -1443,28 +1443,32 @@ html[data-theme="dack"] .btn-jump:hover {
     }
 }
 
-/* 不再提示按钮高亮 - 官方域名 */
+/* 不再提示按钮高亮 - 官方域名（明显样式） */
 .btn-nomore.highlight {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    color: #fff;
-    border-color: transparent;
+    background: var(--main-bg-color, #fff);
+    color: var(--main-text-color, #000);
+    border: 2px solid #16a34a;
     font-weight: 600;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
 }
 
 .btn-nomore.highlight:hover {
-    background: linear-gradient(135deg, #d97706, #b45309);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    background: #16a34a;
+    color: #fff;
+    border-color: #16a34a;
 }
 
 html[data-theme="dack"] .btn-nomore.highlight {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    color: #000;
+    background: rgba(22, 163, 74, 0.2);
+    color: #4ade80;
+    border: 2px solid #4ade80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
 }
 
 html[data-theme="dack"] .btn-nomore.highlight:hover {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    background: #4ade80;
+    color: #000;
+    border-color: #4ade80;
 }
 
 /* 安全域名绿色 */
@@ -1475,4 +1479,10 @@ html[data-theme="dack"] .btn-nomore.highlight:hover {
 
 html[data-theme="dack"] #officialUrl {
     color: #4ade80;
+}
+
+.iconItem:nth-child(6):hover {
+    width: 95px;
+    transform: translateY(-2px);
+    background: var(--icon-3-hover-color, rgb(169, 255, 248));
 }

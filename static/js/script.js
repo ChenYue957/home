@@ -250,9 +250,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 options.forEach(o => o.classList.remove('active'));
                 this.classList.add('active');
                 
-                // 更新顶部图标
+                // 更新顶部图标 - 获取当前选中的img src
                 if (triggerIcon) {
-                    triggerIcon.innerHTML = this.querySelector('.option-icon').innerHTML;
+                    const iconImg = this.querySelector('.option-icon img');
+                    if (iconImg) {
+                        triggerIcon.innerHTML = `<img src="${iconImg.src}" width="16" height="16" style="border-radius: 2px; display: block;">`;
+                    }
                 }
                 
                 // 关闭下拉
@@ -317,49 +320,74 @@ document.addEventListener('DOMContentLoaded', function () {
             options[1].classList.add('active'); // 默认必应（第二个）
             console.log('初始化默认选择必应');
         }
+
+        // 初始化域名提示
+        initDomainTip();
+
     })();
 
-            // ===== 域名安全提示 =====
-            (function initDomainTip() {
-                if (getCookie('noDomainTip') === 'true') return;
-                
-                const host = window.location.host;
-                const tipEl = document.getElementById('domainTip');
-                const currentUrlEl = document.getElementById('currentUrl');
-                const officialLineEl = document.getElementById('officialLine');
-                const noMoreBtn = document.querySelector('.btn-nomore');
-                
-                currentUrlEl.textContent = window.location.href;
-                
-                // 判断是否官方域名
-                const officialDomains = ['chenyue.top', 'chenyue.art:957', 'chenyue957.github.io'];
-                const isOfficial = officialDomains.some(d => host.includes(d));
-                
-                if (isOfficial) {
-                    // 官方域名：安全提示，高亮不再提示
-                    officialLineEl.innerHTML = '当前访问：<span id="officialUrl" style="color: #16a34a;">安全域名</span>';
-                    noMoreBtn.classList.add('highlight');
-                } else {
-                    // 非官方域名：显示推荐地址，不高亮
-                    officialLineEl.innerHTML = '推荐访问：<span id="officialUrl">https://chenyue.top</span>';
-                    noMoreBtn.classList.remove('highlight');
-                }
-                
-                setTimeout(() => {
-                    tipEl.classList.add('show');
-                }, 500);
-            })();
-
-        function closeDomainTip() {
-            document.getElementById('domainTip').classList.remove('show');
-        }
-
-        function setNoTip() {
-            setCookie('noDomainTip', 'true', 30);
-            closeDomainTip();
-        }
 });
 
+// ===== 域名安全提示 - 全局函数 =====
+function closeDomainTip() {
+    console.log('关闭弹窗'); // 调试用
+    var tipEl = document.getElementById('domainTip');
+    if (!tipEl) {
+        console.log('找不到弹窗元素');
+        return;
+    }
+    
+    tipEl.classList.remove('show');
+    
+    setTimeout(function() {
+        tipEl.style.display = 'none';
+    }, 300);
+}
+
+function setNoTip() {
+    console.log('设置不再提示'); // 调试用
+    setCookie('noDomainTip', 'true', 30);
+    closeDomainTip();
+}
+
+// 初始化函数
+function initDomainTip() {
+    if (getCookie('noDomainTip') === 'true') {
+        console.log('已设置不再提示，跳过');
+        return;
+    }
+    
+    var host = window.location.host;
+    var tipEl = document.getElementById('domainTip');
+    var currentUrlEl = document.getElementById('currentUrl');
+    var officialLineEl = document.getElementById('officialLine');
+    var noMoreBtn = document.querySelector('.btn-nomore');
+    
+    if (!tipEl || !currentUrlEl || !officialLineEl) {
+        console.log('找不到必要元素');
+        return;
+    }
+    
+    currentUrlEl.textContent = window.location.href;
+    
+    var officialDomains = ['chenyue.top', 'chenyue.art:957', 'chenyue957.github.io'];
+    var isOfficial = officialDomains.some(function(d) {
+        return host.indexOf(d) !== -1;
+    });
+    
+    if (isOfficial) {
+        officialLineEl.innerHTML = '当前访问：<span id="officialUrl">安全域名</span>';
+        if (noMoreBtn) noMoreBtn.classList.add('highlight');
+    } else {
+        officialLineEl.innerHTML = '推荐访问：<span id="officialUrl">https://chenyue.top</span>';
+        if (noMoreBtn) noMoreBtn.classList.remove('highlight');
+    }
+    
+    setTimeout(function() {
+        tipEl.classList.add('show');
+        console.log('弹窗显示');
+    }, 500);
+}
 
 // 动态设置博客链接
 (function() {
@@ -405,3 +433,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     homeLink.href = homeUrl;
 })();
+
+// 显示域名选择器（清空记录并重新显示）
+function showDomainSelector() {
+    // 清空不再提示记录
+    setCookie('noDomainTip', 'false', -1);
+    
+    // 重置弹窗显示
+    var tipEl = document.getElementById('domainTip');
+    if (tipEl) {
+        tipEl.style.display = 'block';
+        // 强制重绘
+        tipEl.offsetHeight;
+        tipEl.classList.add('show');
+    }
+    
+    console.log('已重置域名提示');
+}
