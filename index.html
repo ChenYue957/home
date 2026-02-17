@@ -19,6 +19,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./static/css/style.css?v=1.33">
 </head>
+
+<!-- 域名安全提示 -->
+<div id="domainTip" class="domain-tip">
+    <div class="tip-header">
+        <span class="tip-icon">⚠️</span>
+        <span class="tip-title">域名安全警告</span>
+    </div>
+    <div class="tip-body">
+        <p>当前地址：<span id="currentUrl"></span></p>
+        <p id="officialLine">官方地址：<span id="officialUrl">https://chenyue.top</span></p>
+    </div>
+    <div class="tip-row">
+        <button class="tip-btn btn-secondary" onclick="closeDomainTip()">继续访问</button>
+        <button class="tip-btn btn-nomore" onclick="setNoTip()">不再提示</button>
+    </div>
+    <div class="tip-row tip-jump-row">
+        <a href="https://chenyue.top" class="tip-btn btn-jump">全球CF节点</a>
+        <a href="https://chenyue.art:957" class="tip-btn btn-jump">IPv6高速节点</a>
+        <a href="https://chenyue957.github.io/home/" class="tip-btn btn-jump">GitHub备线</a>
+    </div>
+</div>
+
 <body>
 <!-- 刷新加载动画 -->
 <div id="PageLoading">
@@ -456,7 +478,7 @@
             <div class="projectList">
                 <!-- 项目列表开始 -->
                 <!---->
-                <a class="projectItem" target="_blank" id="blogLink" href="https://blog.chenyue.top">
+                <a class="projectItem" target="_self" id="homeLink" href="/">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
                         <h1>尘钥ChenYue的主页</h1>

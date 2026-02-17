@@ -1245,3 +1245,148 @@ html[data-theme="dack"] .select-trigger {
     position: relative;
     z-index: 1;
 }
+
+/* ===== 域名安全提示 ===== */
+.domain-tip {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 340px;
+    background: rgba(20, 20, 25, 0.98);
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 9999;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    transform: translateX(150%);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.domain-tip.show {
+    transform: translateX(0);
+}
+
+.tip-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.tip-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.tip-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.tip-body {
+    margin-bottom: 16px;
+}
+
+.tip-body p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #888;
+    word-break: break-all;
+    line-height: 1.6;
+}
+
+.tip-body span {
+    color: #ccc;
+    font-weight: 500;
+}
+
+#currentUrl {
+    color: #fbbf24;
+}
+
+#officialUrl {
+    color: #4ade80;
+}
+
+.tip-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.tip-row:last-child {
+    margin-bottom: 0;
+}
+
+.tip-jump-row {
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tip-btn {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-nomore {
+    background: transparent;
+    color: #666;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-nomore:hover {
+    color: #999;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-jump {
+    background: #1a1a1f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #aaa;
+}
+
+.btn-jump:hover {
+    background: #25252a;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* 移动端 */
+@media screen and (max-width: 600px) {
+    .domain-tip {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        transform: translateY(-150%);
+    }
+    
+    .domain-tip.show {
+        transform: translateY(0);
+    }
+    
+    .tip-btn {
+        font-size: 11px;
+        padding: 12px 0;
+    }
+}

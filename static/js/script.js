@@ -31,6 +31,31 @@ function toggleClass(selector, className) {
     });
 }
 
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        while (cookie.charAt(0) == ' ') {
+            cookie = cookie.substring(1, cookie.length);
+        }
+        if (cookie.indexOf(nameEQ) == 0) {
+            return cookie.substring(nameEQ.length, cookie.length);
+        }
+    }
+    return null;
+}
+
 function wx(imageURL) {
     var tcMainElement = document.querySelector(".tc-img");
     if (imageURL) {
@@ -112,37 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         setCookie("themeState", theme, 365);
     }
-
-
-
-
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            while (cookie.charAt(0) == ' ') {
-                cookie = cookie.substring(1, cookie.length);
-            }
-            if (cookie.indexOf(nameEQ) == 0) {
-                return cookie.substring(nameEQ.length, cookie.length);
-            }
-        }
-        return null;
-    }
-
-
 
 
 
@@ -325,6 +319,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })();
 
+            // ===== 域名安全提示 =====
+            (function initDomainTip() {
+                if (getCookie('noDomainTip') === 'true') return;
+                
+                const host = window.location.host;
+                const tipEl = document.getElementById('domainTip');
+                const currentUrlEl = document.getElementById('currentUrl');
+                const officialLineEl = document.getElementById('officialLine');
+                
+                currentUrlEl.textContent = window.location.href;
+                
+                // 判断是否官方域名
+                const officialDomains = ['chenyue.top', 'chenyue.art:957', 'chenyue957.github.io'];
+                const isOfficial = officialDomains.some(d => host.includes(d));
+                
+                if (!isOfficial) {
+                    officialLineEl.innerHTML = '推荐访问：<span style="color: #f87171;">当前为非官方域名</span>';
+                }
+                
+                setTimeout(() => {
+                    tipEl.classList.add('show');
+                }, 500);
+            })();
+
+        function closeDomainTip() {
+            document.getElementById('domainTip').classList.remove('show');
+        }
+
+        function setNoTip() {
+            setCookie('noDomainTip', 'true', 30);
+            closeDomainTip();
+        }
 });
 
 
@@ -350,4 +376,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     blogLink.href = blogUrl;        
+})();
+
+// 动态设置个人主页跳转
+(function() {
+    const homeLink = document.getElementById('homeLink');
+    if (!homeLink) {
+        console.warn('homeLink 元素未找到');
+        return;
+    }
+
+    const host = window.location.host;
+    const pathname = window.location.pathname;
+
+    let homeUrl = '/'; // 默认回到当前站点根
+
+    // 如果不在列表中，跳转到 chenyue.top
+    if (!host.includes('chenyue.top') && !host.includes('chenyue.art:957') && !(host.includes('github.io') && pathname.includes('/home/'))) {
+        homeUrl = 'https://chenyue.top';
+    }
+
+    homeLink.href = homeUrl;
 })();
