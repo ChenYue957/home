@@ -432,8 +432,6 @@ body {
    display: none;
 }
 
-
-
 .iconItem {
     width: 47px;
     height: 40px;
@@ -457,49 +455,48 @@ body {
     display: none;
 }
 
-
-
-
-
-.iconItem:nth-child(1):hover {
-    width: 95px;
-    transform: translateY(-2px);
-    background: var(--icon-1-hover-color, rgb(137, 172, 255));
+.icon-mail:hover { 
+    width: 80px; transform: translateY(-2px); background: var(--icon-2-hover-color, rgb(251, 173, 255));
 }
 
-.iconItem:nth-child(2):hover {
-    width: 80px;
-    transform: translateY(-2px);
-    background: var(--icon-2-hover-color, rgb(251, 173, 255));
+.icon-zanzhu:hover { 
+    width: 80px; 
+    transform: translateY(-2px); 
+    background: var(--icon-3-hover-color,
+     rgb(169, 255, 248)); 
 }
 
-.iconItem:nth-child(3):hover {
-    width: 80px;
-    transform: translateY(-2px);
-    background: var(--icon-3-hover-color, rgb(169, 255, 248));
+.icon-weixin:hover { 
+    width: 80px; 
+    transform: translateY(-2px); 
+    background: var(--icon-4-hover-color, 
+    rgb(255, 167, 161)); 
 }
 
-.iconItem:nth-child(4):hover {
-    width: 80px;
-    transform: translateY(-2px);
-    background: var(--icon-4-hover-color, rgb(255, 167, 161));
+.icon-bianlan:hover { 
+    width: 80px; 
+    transform: translateY(-2px); 
+    background: var(--icon-5-hover-color, 
+    rgb(255, 183, 156)); 
 }
-
-.iconItem:nth-child(5):hover {
-    width: 80px;
-    transform: translateY(-2px);
-    background: var(--icon-5-hover-color, rgb(255, 183, 156));
+.icon-jiedian:hover { 
+    width: 95px; transform: translateY(-2px); 
+    background: var(--icon-3-hover-color, 
+    rgb(169, 255, 248));
 }
 
 .iconItem:hover .iconTip {
     display: block;
 }
 
-.switch:hover {
+.iconItem.switch {
     width: 55px;
+}
 
+.iconItem.switch:hover {
+    width: 55px !important;
     transform: translateY(-2px);
-    background: var(--icon-5-hover-color, rgb(255, 183, 156));
+    background: var(--icon-5-hover-color, rgb(255, 183, 156)) !important;
 }
 
 .tanChiShe {
@@ -546,7 +543,6 @@ body {
     width: calc(50% - 60px);
     transition: all 0.5s ease;
 
-
 }
 
 .projectItem.fade-in-visible {
@@ -576,7 +572,7 @@ body {
 }
 
 .projectItem:hover h1 {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .projectItemLeft p {
@@ -618,6 +614,374 @@ body {
 
 }
 
+.tc {
+    position: fixed;
+    display: flex;
+    visibility: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.tc.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tc-main {
+    z-index: 100000;
+    width: 80%;
+    max-width: 300px;
+    min-height: 200px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    opacity: 0;
+    display: flex;
+    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transform: scale(0.9) translateY(20px);
+}
+
+.tc.active .tc-main {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+html[data-theme="dack"] .tc-main {
+    background: rgb(19, 20, 24);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tc-img {
+    width: 100%;
+    height: 100%;
+}
+
+.tc-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    background-color: var(--project-item-bg-color, rgba(249, 250, 251, 0.6));
+    margin-top: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tc-close:hover {
+    background-color: var(--project-item-hover-color, rgba(244, 245, 246, 0.8));
+    transform: scale(1.1);
+}
+
+/* MC 卡片列表 */
+.mcServerList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 5px;
+}
+
+.mcServerList .projectItem {
+    width: calc(50% - 60px);
+    height: 105px;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+    margin: 0;
+    overflow: hidden;
+}
+
+.mcIconRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    height: 100%;
+}
+
+#mcServerIcon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    image-rendering: pixelated;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 统一 hover 动画 */
+.mcServerList .projectItem:hover {
+    transform: translateY(-3px);
+    border: 0.8px solid #747bff;
+    box-shadow: 0 8px 16px -4px #2c2d300c;
+    background-color: var(--project-item-hover-color, rgba(244, 245, 246, 0.8));
+}
+
+.mcServerList .projectItem:hover h1 {
+    font-size: 20px;
+}
+
+.mcServerList .projectItem:hover .projectItemLeft {
+    width: 100%;
+}
+
+.mcServerList .projectItem:hover .projectItemRight {
+    width: 0%;
+}
+
+.mcServerList .projectItem:hover .projectItemRight img {
+    transform: rotate(40deg);
+}
+
+/* 状态卡片 */
+.mcStatusCard .projectItemLeft {
+    width: 75%;
+}
+
+.mcPing {
+    font-size: 12px;
+    color: var(--project-item-left-text-color, #7e7e7e);
+    margin: 2px 0 6px 0;
+}
+
+/* IP卡片 */
+.mcIpCard .projectItemLeft {
+    width: 100%;
+    min-width: 0;
+}
+
+.mcIpCard h1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.mcCopyHint {
+    font-size: 10px;
+    color: var(--project-item-left-text-color, #7e7e7e);
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.mcIpList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 0px;
+    width: 100%;
+}
+
+.mcIpRow {
+    display: grid;
+    grid-template-columns: 14px 70px auto 1fr;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 3px 0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.mcStatusDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #999;
+    justify-self: center;
+}
+
+.mcStatusDot.online {
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+}
+
+.mcStatusDot.offline {
+    background: #ef4444;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.mcStatusDot.checking {
+    background: #fbbf24;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.mcIpType {
+    font-size: 11px;
+    color: var(--project-item-left-text-color, #7e7e7e);
+    white-space: nowrap;
+    width: 70px;
+    text-align: left;
+}
+
+.mcIpRow code {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--project-item-left-title-color, #000);
+    background: rgba(116, 123, 255, 0.1);
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    justify-self: start;
+}
+
+.mcCopyTip {
+    font-size: 11px;
+    color: #4ade80;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    justify-self: end;
+}
+
+.mcCopyTip.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 玩家列表弹窗 */
+.mcPlayerModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mcPlayerModal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mcPlayerModalContent {
+    background: var(--main-bg-color, #fff);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 70vh;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.mcPlayerModal.active .mcPlayerModalContent {
+    transform: scale(1);
+}
+
+.mcModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mcModalHeader h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--main-text-color, #000);
+}
+
+.mcModalHeader span {
+    color: #747bff;
+    font-weight: 600;
+}
+
+.mcModalClose {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--project-item-left-text-color, #7e7e7e);
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.mcModalClose:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.mcModalBody {
+    padding: 15px 20px;
+    max-height: 50vh;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mcModalPlayerTag {
+    padding: 6px 14px;
+    background: rgba(116, 123, 255, 0.15);
+    color: #747bff;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+/* 暗黑模式适配 */
+html[data-theme="dack"] .mcPlayerModalContent {
+    background: rgb(19, 20, 24);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dack"] .mcModalHeader {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dack"] .mcModalClose:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 移动端 */
+@media (max-width: 1000px) {
+    .projectItem {
+        width: calc(100% - 25px);
+    }
+
+    .mcServerList .projectItem {
+        width: calc(100% - 25px);
+    }
+}
+
+@media (max-width: 800px) {
+    .mcServerList .projectItem {
+        width: calc(100% - 25px);
+    }
+}
+
 .skill {
     padding: 25px;
     width: 100%;
@@ -639,31 +1003,6 @@ footer {
     font-size: 13px;
     margin-top: 20px;
 }
-.mcServerCard {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 5px;
-}
-
-.mcServerCard iframe {
-    opacity: 0;
-    transform: translateY(110px);
-    transition: all 0.5s ease;
-    transition-delay: 0s;
-    width: calc(50% - 60px);
-    height: 70px;
-    border: none;
-    display: block;
-    border-radius: 8px;
-    background-color: var(--project-item-bg-color, rgba(15,16,19,1.00));
-    margin-top: 20px;
-}
-
-.mcServerCard iframe.fade-in-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 @media (max-width: 1000px) {
 
@@ -675,21 +1014,27 @@ footer {
         width: calc(100% - 25px);
     }
 
+}
 
-  
-
-
+/* 电脑端隐藏边栏按钮 */
+.icon-bianlan {
+    display: none;
 }
 
 @media (max-width: 800px) {
 
-
     .right {
         width: 100%;
     }
-.tanChiShe {
-    width: 100%;
-}
+
+    /* 移动端显示边栏按钮 */
+    .icon-bianlan {
+        display: flex;
+    }
+
+    .tanChiShe {
+        width: 100%;
+    }
     .description {
         font-size: 16px;
     }
@@ -699,7 +1044,6 @@ footer {
 
     }
 
-
     .projectItemLeft p {
         font-size: 14px;
     }
@@ -707,12 +1051,6 @@ footer {
     .projectItemLeft h1 {
 
         font-size: 15px;
-    }
-
-    .projectItem:hover h1 {
-
-        font-size: 20px;
-
     }
 
     .projectList {
@@ -728,10 +1066,6 @@ footer {
     .skill #skillPc {
         display: none;
     }
-
-
-
-
 
     .left {
         position: fixed;
@@ -757,30 +1091,16 @@ footer {
         transition: all 0.25s ease-out;
     }
 
- 
-
     .left-open {
         pointer-events: auto;
         background: rgba(100, 100, 100, 0.5);
     }
 
-
     .left-main-open {
         left: 0;
     }
 
-
-
-
-
-
-
-
 }
-
-
-
-
 
 .tc {
     position: fixed;
@@ -837,12 +1157,6 @@ footer {
     margin-top: 30px;
     border-radius: 50%;
 }
-
-
-
-
-
-
 
 .onoffswitch {
     position: relative;
@@ -1242,6 +1556,20 @@ html[data-theme="dack"] .select-trigger {
 .logo {
     position: relative;
     z-index: 1;
+}
+
+/* 邮箱复制状态 */
+.mail-copy.copied {
+    background: #4ade80 !important;
+    color: #fff !important;
+}
+
+.mail-copy.copied .mail-icon path {
+    fill: #fff !important;
+}
+
+.mail-copy.copied .mail-text {
+    color: #fff !important;
 }
 
 /* ===== 域名安全提示 ===== */

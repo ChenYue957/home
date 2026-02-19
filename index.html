@@ -113,7 +113,7 @@
                 </div>
             </div>
             
-            <div  class="logo" style="background-image: url(favicon.ico);">
+            <div  class="logo" style="background-image: url(./static/img/icon_256x256.png);">
                 <img id="randomText" style="position: absolute;top:-39%;left:-40%;width: 175%; aspect-ratio: 1/1;" src="./static/img/bzhantouxiangk.png" alt="头像框" title="博主 26年02月07日 在线"></div>
             
             <div class="left-div left-des">
@@ -266,29 +266,17 @@
 
                 <!-- 图标我全部是iconfont找的 -->
                 <!---->
-
-                <a class="iconItem" target="_blank" href="https://github.com/ChenYue957">
-                    <svg t="1704870335945" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                        xmlns="http://www.w3.org/2000/svg" p-id="2487" width="22px" height="22px">
-                        <path
-                            d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9 23.5 23.2 38.1 55.4 38.1 91v112.5c0.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"
-                            fill="#000000" p-id="2488"></path>
-
-                    </svg>
-                    <div class="iconTip">Github</div>
-                </a>
-                <!---->
-                <a class="iconItem" target="_blank" href="xjr957@gmail.com">
-                    <svg t="1704870588438" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                <a class="iconItem icon-mail mail-copy" href="javascript:void(0)" onclick="copyMail(this)">
+                    <svg t="1704870588438" class="icon mail-icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3174" width="22px" height="22px">
                         <path
                             d="M926.47619 355.644952V780.190476a73.142857 73.142857 0 0 1-73.142857 73.142857H170.666667a73.142857 73.142857 0 0 1-73.142857-73.142857V355.644952l304.103619 257.828572a170.666667 170.666667 0 0 0 220.745142 0L926.47619 355.644952zM853.333333 170.666667a74.044952 74.044952 0 0 1 26.087619 4.778666 72.704 72.704 0 0 1 30.622477 22.186667 73.508571 73.508571 0 0 1 10.678857 17.67619c3.169524 7.509333 5.12 15.652571 5.607619 24.210286L926.47619 243.809524v24.380952L559.469714 581.241905a73.142857 73.142857 0 0 1-91.306666 2.901333l-3.632762-2.925714L97.52381 268.190476v-24.380952a72.899048 72.899048 0 0 1 40.155428-65.292191A72.97219 72.97219 0 0 1 170.666667 170.666667h682.666666z"
                             fill="#000000" p-id="3175"></path>
                     </svg>
-                    <div class="iconTip">Mail</div>
+                    <div class="iconTip mail-text">Mail</div>
                 </a>
                 <!---->
-                <a class="iconItem" onclick="wx('./static/img/wxzsm.jpg')" href="javascript:void(0)">
+                <a class="iconItem icon-zanzhu" onclick="showWx('./static/img/wxzsm.jpg')" href="javascript:void(0)">
                     <svg t="1705247464964" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="4987" width="22px" height="22px">
                         <path
@@ -304,7 +292,7 @@
                     <div class="iconTip">赞助</div>
                 </a>
                 <!---->
-                <a class="iconItem" href="javascript:void(0)" onclick="wx('./static/img/wx.jpg')">
+                <a class="iconItem icon-weixin" onclick="showWx('./static/img/wx.jpg')" href="javascript:void(0)">
                     <svg t="1705322844467" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="2925" width="22px" height="22px">
                         <path
@@ -320,7 +308,7 @@
                     <div class="iconTip">微信</div>
                 </a>
                 <!---->
-                <a class="iconItem" href="javascript:void(0)" onclick="left()">
+                <a class="iconItem icon-bianlan" href="javascript:void(0)" onclick="left()">
                     <svg t="1706175679525" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="1880" width="22px" height="22px">
                         <path
@@ -330,7 +318,7 @@
                     <div class="iconTip">边栏</div>
                 </a>
                 <!---->
-                <a class="iconItem" href="javascript:void(0)" onclick="showDomainSelector()">
+                <a class="iconItem icon-jiedian" href="javascript:void(0)" onclick="showDomainSelector()">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M2 12h20"></path>
@@ -385,14 +373,14 @@
                     <!-- 项目项结束 -->
                 </a>
                 <!---->
-                <a class="projectItem" target="_blank" href="https://pve.chenyue.art:8006">
+                <a class="projectItem" target="_blank" href="https://github.com/ChenYue957">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
-                        <h1>尘钥ChenYue服务器</h1>
-                        <p>PVE后台</p>
+                        <h1>尘钥ChenYue的GitHub</h1>
+                        <p>GitHub主页</p>
                     </div>
                     <div class="projectItemRight">
-                        <img src="./static/img/pve.png" alt="">
+                        <img src="./static/img/github.png" alt="">
                     </div>
                     <!-- 项目项结束 -->
                 </a>
@@ -400,7 +388,7 @@
                 <a class="projectItem" target="_blank" href="https://nas.chenyue.art:5667">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
-                        <h1>尘钥ChenYue云盘 主</h1>
+                        <h1>尘钥ChenYue的云盘 主</h1>
                         <p>存储收集文件和静态资源</p>
                     </div>
                     <div class="projectItemRight">
@@ -412,11 +400,35 @@
                 <a class="projectItem" target="_blank" href="https://nas2.chenyue.art:5667">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
-                        <h1>尘钥ChenYue云盘 备</h1>
+                        <h1>尘钥ChenYue的云盘 备</h1>
                         <p>冷备份</p>
                     </div>
                     <div class="projectItemRight">
                         <img src="./static/img/fnos.png" alt="">
+                    </div>
+                    <!-- 项目项结束 -->
+                </a>
+                <!---->
+                 <a class="projectItem" target="_blank" href="https://pve.chenyue.art:8006">
+                    <!-- 项目项开始 -->
+                    <div class="projectItemLeft">
+                        <h1>尘钥ChenYue的服务器</h1>
+                        <p>PVE后台</p>
+                    </div>
+                    <div class="projectItemRight">
+                        <img src="./static/img/pve.png" alt="">
+                    </div>
+                    <!-- 项目项结束 -->
+                </a>
+                <!---->
+                <a class="projectItem" target="_blank" href="https://music.163.com/#/playlist?id=8001178403">
+                    <!-- 项目项开始 -->
+                    <div class="projectItemLeft">
+                        <h1>尘钥ChenYue的网易云</h1>
+                        <p>尊贵的LV9 SVIP用户</p>
+                    </div>
+                    <div class="projectItemRight">
+                        <img src="./static/img/wwy.png" alt="">
                     </div>
                     <!-- 项目项结束 -->
                 </a>
@@ -433,14 +445,14 @@
                     <!-- 项目项结束 -->
                 </a>
                 <!---->
-                <a class="projectItem" target="_blank" href="https://music.163.com/#/playlist?id=8001178403">
+                <a class="projectItem" target="_blank" href="https://v.douyin.com/C3E-FgE2HPA/%205@3.com%20:1pm">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
-                        <h1>尘钥ChenYue的网易云</h1>
-                        <p>尊贵的LV9 SVIP用户</p>
+                        <h1>尘钥ChenYue的抖音</h1>
+                        <p>啥都没有</p>
                     </div>
                     <div class="projectItemRight">
-                        <img src="./static/img/wwy.png" alt="">
+                        <img src="./static/img/tiktok.png" alt="">
                     </div>
                     <!-- 项目项结束 -->
                 </a>
@@ -458,26 +470,55 @@
                 </svg>
                 尘钥的MC服 The Mortal World（尘世）
             </div>
-            <div class="mcServerCard">
-                <!-- 项目列表开始 -->
-                <!---->
-                    <!-- 项目项开始 -->
+
+            <div class="projectList mcServerList">
+                <!-- 左侧：状态卡片（大图标） -->
+                <div class="projectItem mcStatusCard" id="mcStatus">
                     <div class="projectItemLeft">
-                        &ensp;&ensp;&ensp;内&thinsp;网&thinsp;穿&thinsp;透&thinsp;地&thinsp;址：mc.chenyue.art<br>
-                        &ensp;&ensp;&ensp;ipv6&thinsp;&thinsp;高&thinsp;速&thinsp;地&thinsp;址：mcv6.chenyue.art
+                        <h1>获取中...</h1>
+                        <p class="mcPing">检测中...</p>
+                        <div class="mcPlayerList" id="playerList">
+                            <span class="mcPlayerTag">加载中...</span>
+                        </div>
                     </div>
-                    <!-- 项目项结束 -->
-                <!---->
-                    <!-- 项目列表开始 -->
-                    <iframe
-                    src="https://sr-api.sfirew.com/server/mc.chenyue.art/embed"
-                    width="628"
-                    height="150">
-                    </iframe>
-                    <!-- 项目项结束 -->
-                <!---->
-            </div>  
-            <!-- 内容结束 --> 
+                    <div class="projectItemRight mcIconRight">
+                        <img id="mcServerIcon" src="./static/img/minecraft_icon.png" alt="MC">
+                    </div>
+                </div>
+                
+                <!-- 右侧：IP地址卡片（无图标，点击复制） -->
+                <div class="projectItem mcIpCard">
+                    <div class="projectItemLeft">
+                        <h1>连接地址 <span class="mcCopyHint">连通性测试仅供参考</h1>
+                        <div class="mcIpList">
+                            <div class="mcIpRow" onclick="copyIp('mcv6.chenyue.art', 'tip2')">
+                                <span class="mcStatusDot" id="dotV6"></span>
+                                <span class="mcIpType">IPv6高速节点</span>
+                                <code>mcv6.chenyue.art</code>
+                                <span class="mcCopyTip" id="tip2"></span>
+                            </div>
+                            <div class="mcIpRow" onclick="copyIp('mc.chenyue.art', 'tip1')">
+                                <span class="mcStatusDot" id="dotV4"></span>
+                                <span class="mcIpType">内网穿透节点</span>
+                                <code>mc.chenyue.art</code>
+                                <span class="mcCopyTip" id="tip1"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 玩家列表弹窗 -->
+            <div class="mcPlayerModal" id="playerModal">
+                <div class="mcPlayerModalContent">
+                    <div class="mcModalHeader">
+                        <h3>在线玩家 <span id="playerCount">0</span>人</h3>
+                        <button class="mcModalClose" onclick="closePlayerModal()">×</button>
+                    </div>
+                    <div class="mcModalBody" id="modalPlayerList"></div>
+                </div>
+            </div>
+            <!-- 内容结束 -->
 
             <!-- 内容开始 -->
             <div class="title">
@@ -492,7 +533,7 @@
             <div class="projectList">
                 <!-- 项目列表开始 -->
                 <!---->
-                <a class="projectItem" target="_self" id="homeLink" href="/">
+                <a class="projectItem" target="_blank" href="https://github.com/ChenYue957/home">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
                         <h1>尘钥ChenYue的主页</h1>
@@ -504,10 +545,10 @@
                     <!-- 项目项结束 -->
                 </a>
                 <!---->
-                <a class="projectItem" target="_blank" href="会写篇博客的别急">
+                <a class="projectItem" target="_blank" href="https://www.mcsv.top/server/mc.chenyue.art">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
-                        <h1>MC服</h1>
+                        <h1>尘钥ChenYue的MC服</h1>
                         <p>一个运维了三五年的MC服务器</p>
                     </div>
                     <div class="projectItemRight">
@@ -519,7 +560,7 @@
                 <a class="projectItem" target="_blank" href="会写篇博客的别急">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
-                        <h1>尘钥ChenYue家里云</h1>
+                        <h1>尘钥ChenYue的家里云</h1>
                         <p>一个崩了又修 修了又崩n次的节点服务器</p>
                     </div>
                     <div class="projectItemRight">
@@ -528,11 +569,11 @@
                     <!-- 项目项结束 -->
                 </a>
                 <!---->
-                <a class="projectItem" target="_blank" href="会写篇博客的别急">
+                <a class="projectItem" target="_blank" href="https://nas.chenyue.art:5667/s/02e6963018b64e02ad">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
                         <h1>win常用工具整合</h1>
-                        <p>自用资源站（还没做画大饼ing）</p>
+                        <p>自用资源站(走IPv6可能打不开)</p>
                     </div>
                     <div class="projectItemRight">
                         <img src="./static/img/LogosMicrosoftWindowsIcon.png" alt="">

@@ -1,4 +1,4 @@
-console.log('%cCopyright © 2024 chenyue.art', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
+console.log('%c2026 chenyue.top  chenyue.top', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
 console.log('%c   /\\_/\\', 'color: #8B4513; font-size: 20px;');
 console.log('%c  ( o.o )', 'color: #8B4513; font-size: 20px;');
 console.log(' %c  > ^ <', 'color: #8B4513; font-size: 20px;');
@@ -79,7 +79,7 @@ function left() {
 document.addEventListener('DOMContentLoaded', function () {
 
     // 随机显示两条文本的函数
-    const randomTexts = ["博主 26年02月07日 在线", "别戳我啦"];
+    const randomTexts = ["博主 26年02月19日 在线", "别戳我啦"];
     const textElement = document.getElementById("randomText");
     let lastUpdateTime = 0;
     const throttleDelay = 1000; // 1秒内最多更新一次
@@ -198,15 +198,18 @@ document.addEventListener('DOMContentLoaded', function () {
     /*加载效果*/
     var pageLoading = document.querySelector("#PageLoading");
     var center = document.getElementById("PageLoading-尘钥ChenYue-center");
-    setTimeout(function () {
+        requestAnimationFrame(() => {
         checkProjectItems();
         pageLoading.style.opacity = '0';
-        center.style.height = "500px";
-        center.style.width = "500px";
-        center.style.opacity = "0";
-        pageLoading.style.backgroundSize = "200%";
-     }, 300);
-
+        
+        // 拆分到下一帧
+        requestAnimationFrame(() => {
+            center.style.height = "500px";
+            center.style.width = "500px";
+            center.style.opacity = "0";
+            pageLoading.style.backgroundSize = "200%";
+        });
+    });
     // ===== 搜索框功能（确保版）=====
     (function() {
         // 获取元素
@@ -217,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const input = document.getElementById('searchInput');
         const btn = document.getElementById('searchBtn');
         
-        console.log('搜索框初始化:', {customSelect, trigger, options: options.length, input, btn});
 
         // 获取当前选中的搜索引擎URL（实时查询）
         function getCurrentUrl() {
@@ -228,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             // 使用 dataset 获取（最可靠）
             const url = active.dataset.value;
-            console.log('获取到URL:', url);
             return url || 'https://www.bing.com/search?q=';
         }
 
@@ -237,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function () {
             trigger.addEventListener('click', function(e) {
                 e.stopPropagation();
                 customSelect.classList.toggle('active');
-                console.log('下拉菜单状态:', customSelect.classList.contains('active'));
             });
         }
 
@@ -260,8 +260,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // 关闭下拉
                 customSelect.classList.remove('active');
-                
-                console.log('切换到:', this.dataset.value);
             });
         });
 
@@ -281,7 +279,6 @@ document.addEventListener('DOMContentLoaded', function () {
             
             const query = input.value.trim();
             if (!query) {
-                console.log('输入为空');
                 return;
             }
             
@@ -293,8 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             
             const fullUrl = url + encodeURIComponent(query);
-            console.log('跳转:', fullUrl);
-            
             window.open(fullUrl, '_blank');
             input.value = '';
         }
@@ -302,7 +297,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // 绑定事件
         if (btn) {
             btn.addEventListener('click', search);
-            console.log('搜索按钮已绑定');
         }
         
         if (input) {
@@ -312,13 +306,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     search();
                 }
             });
-            console.log('输入框已绑定');
         }
         
         // 初始化：确保有一个 active
         if (options.length > 0 && !document.querySelector('.option.active')) {
             options[1].classList.add('active'); // 默认必应（第二个）
-            console.log('初始化默认选择必应');
         }
 
         // 初始化域名提示
@@ -328,12 +320,91 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-// ===== 域名安全提示 - 全局函数 =====
+// 全局弹窗函数
+function showWx(imageURL) {
+    const tc = document.querySelector('.tc');
+    const tcMain = document.querySelector('.tc-main');
+    const tcImg = document.querySelector('.tc-img');
+    
+    if (tcImg) tcImg.src = imageURL;
+    if (tc) tc.classList.add('active');
+    if (tcMain) tcMain.classList.add('active');
+    
+    // 延迟绑定点击事件，避免立即触发
+    setTimeout(() => {
+        document.addEventListener('click', closeWxOutside);
+    }, 300); // 等动画完成后再绑定
+}
+
+function closeWxOutside(e) {
+    const tc = document.querySelector('.tc');
+    const tcMain = document.querySelector('.tc-main');
+    
+    // 点击背景遮罩关闭
+    if (e.target === tc) {
+        wx();
+    }
+}
+
+// 统一关闭函数
+function closeWx() {
+    const tc = document.querySelector('.tc');
+    const tcMain = document.querySelector('.tc-main');
+    
+    if (tc) tc.classList.remove('active');
+    if (tcMain) tcMain.classList.remove('active');
+    
+    // 移除事件监听
+    document.removeEventListener('click', closeWxOutside);
+}
+
+function wx() {
+    const tc = document.querySelector('.tc');
+    const tcMain = document.querySelector('.tc-main');
+    
+    if (tc) tc.classList.remove('active');
+    if (tcMain) tcMain.classList.remove('active');
+    
+    // 立即移除监听
+    document.removeEventListener('click', closeWxOutside);
+}
+
+//邮箱点击复制
+function copyMail(element) {
+    const text = 'xjr957@gmail.com';
+    
+    // 复制
+    navigator.clipboard.writeText(text).catch(() => {
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+    });
+    
+    // 获取图标和文字
+    const icon = element.querySelector('.mail-icon');
+    const textEl = element.querySelector('.mail-text');
+    const originalText = textEl.textContent;
+    
+    // 隐藏图标，改文字为已复制
+    if (icon) icon.style.display = 'none';
+    if (textEl) textEl.textContent = '已复制';
+    element.classList.add('copied');
+    
+    // 0.5秒后恢复
+    setTimeout(() => {
+        if (icon) icon.style.display = 'block';
+        if (textEl) textEl.textContent = originalText;
+        element.classList.remove('copied');
+    }, 500);
+}
+
+//域名安全提示 - 全局函数
 function closeDomainTip() {
-    console.log('关闭弹窗'); // 调试用
     var tipEl = document.getElementById('domainTip');
     if (!tipEl) {
-        console.log('找不到弹窗元素');
         return;
     }
     
@@ -345,7 +416,6 @@ function closeDomainTip() {
 }
 
 function setNoTip() {
-    console.log('设置不再提示'); // 调试用
     setCookie('noDomainTip', 'true', 30);
     closeDomainTip();
 }
@@ -353,7 +423,6 @@ function setNoTip() {
 // 初始化函数
 function initDomainTip() {
     if (getCookie('noDomainTip') === 'true') {
-        console.log('已设置不再提示，跳过');
         return;
     }
     
@@ -364,7 +433,6 @@ function initDomainTip() {
     var noMoreBtn = document.querySelector('.btn-nomore');
     
     if (!tipEl || !currentUrlEl || !officialLineEl) {
-        console.log('找不到必要元素');
         return;
     }
     
@@ -385,7 +453,6 @@ function initDomainTip() {
     
     setTimeout(function() {
         tipEl.classList.add('show');
-        console.log('弹窗显示');
     }, 500);
 }
 
@@ -447,6 +514,251 @@ function showDomainSelector() {
         tipEl.offsetHeight;
         tipEl.classList.add('show');
     }
-    
-    console.log('已重置域名提示');
 }
+
+// MC 服务器状态检测
+let allPlayers = [];
+let currentServer = 'ipv6'; // 'ipv6' 或 'frp'
+
+// 检测 IPv6 地址（带超时，不阻塞）
+async function checkIPv6() {
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000); // 4秒超时
+        
+        const res = await fetch('https://api.mcstatus.io/v2/status/java/mcv6.chenyue.art', {
+            signal: controller.signal
+        });
+        clearTimeout(timeout);
+        
+        const data = await res.json();
+        if (data.online) {
+            return { success: true, data, type: 'ipv6' };
+        }
+        throw new Error('IPv6 offline');
+    } catch (e) {
+        return { success: false, error: e };
+    }
+}
+
+// 检测内网穿透地址（带超时）
+async function checkFRP() {
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+        
+        const res = await fetch('https://api.mcstatus.io/v2/status/java/mc.chenyue.art', {
+            signal: controller.signal
+        });
+        clearTimeout(timeout);
+        
+        const data = await res.json();
+        if (data.online) {
+            return { success: true, data, type: 'frp' };
+        }
+        throw new Error('FRP offline');
+    } catch (e) {
+        return { success: false, error: e };
+    }
+}
+
+// 主检测函数（并行检测，哪个成功用哪个）
+async function checkMCStatus() {
+    const statusCard = document.getElementById('mcStatus');
+    const serverIcon = document.getElementById('mcServerIcon');
+    const dotV6 = document.getElementById('dotV6');
+    const dotV4 = document.getElementById('dotV4');
+    
+    if (!statusCard) return;
+    
+    const h1 = statusCard.querySelector('h1');
+    const ping = statusCard.querySelector('.mcPing');
+    const playerList = document.getElementById('playerList');
+    
+    // 初始状态：都显示检测中
+    if (dotV6) dotV6.className = 'mcStatusDot checking';
+    if (dotV4) dotV4.className = 'mcStatusDot checking';
+    h1.textContent = '检测中...';
+    ping.textContent = '查询服务器状态...';
+    
+    // 并行检测两个地址（同时发起，不互相阻塞）
+    const [v6Result, frpResult] = await Promise.all([
+        checkIPv6(),
+        checkFRP()
+    ]);
+    //console.log('IPv6结果:', v6Result);
+    //console.log('FRP结果:', frpResult);
+    
+    // 优先用 IPv6 的数据（如果在线）
+    if (v6Result.success) {
+        currentServer = 'ipv6';
+        updateStatus(v6Result.data, 'IPv6');
+        if (dotV6) {
+            dotV6.classList.remove('checking');
+            dotV6.classList.add('online');
+        }
+        if (dotV4) {
+            dotV4.classList.remove('checking');
+            dotV4.classList.add(frpResult.success ? 'online' : 'offline');
+        }
+        
+        if (v6Result.data.icon && serverIcon) {
+            serverIcon.src = v6Result.data.icon;
+        }
+    } 
+    // IPv6 失败但 FRP 成功
+    else if (frpResult.success) {
+        currentServer = 'frp';
+        updateStatus(frpResult.data, '穿透');
+        if (dotV6) {
+            dotV6.classList.remove('checking');
+            dotV6.classList.add('offline');
+        }
+        if (dotV4) {
+            dotV4.classList.remove('checking');
+            dotV4.classList.add('online');
+        }
+        
+        if (frpResult.data.icon && serverIcon) {
+            serverIcon.src = frpResult.data.icon;
+        }
+    } 
+    // 都失败
+    else {
+        currentServer = null;
+        updateOffline();
+        if (dotV6) {
+            dotV6.classList.remove('checking');
+            dotV6.classList.add('offline');
+        }
+        if (dotV4) {
+            dotV4.classList.remove('checking');
+            dotV4.classList.add('offline');
+        }
+    }
+}
+
+function updateStatus(data, type) {
+    const statusCard = document.getElementById('mcStatus');
+    const h1 = statusCard.querySelector('h1');
+    const ping = statusCard.querySelector('.mcPing');
+    const playerList = document.getElementById('playerList');
+    
+    statusCard.classList.add('online');
+    statusCard.classList.remove('offline');
+    h1.textContent = '服务器在线';
+    ping.textContent = `${type} | ${data.ping}ms | ${data.players.online}/${data.players.max}人`;
+    
+    allPlayers = data.players.list || [];
+    renderPlayerList(playerList, allPlayers);
+}
+
+function updateOffline() {
+    const statusCard = document.getElementById('mcStatus');
+    const h1 = statusCard.querySelector('h1');
+    const ping = statusCard.querySelector('.mcPing');
+    const playerList = document.getElementById('playerList');
+    
+    statusCard.classList.add('offline');
+    statusCard.classList.remove('online');
+    h1.textContent = '服务器离线';
+    ping.textContent = 'IPv6 和穿透均不可用';
+    playerList.innerHTML = '<span class="mcPlayerTag empty">暂无玩家</span>';
+    allPlayers = [];
+}
+
+// 渲染玩家列表（显示前3个）
+function renderPlayerList(container, players) {
+    if (!players || players.length === 0) {
+        container.innerHTML = '<span class="mcPlayerTag empty">暂无玩家</span>';
+        return;
+    }
+    
+    let html = '';
+    const showCount = Math.min(3, players.length);
+    
+    for (let i = 0; i < showCount; i++) {
+        html += `<span class="mcPlayerTag">${escapeHtml(players[i].name_clean)}</span>`;
+    }
+    
+    if (players.length > 3) {
+        html += `<span class="mcPlayerTag more">+${players.length - 3}人</span>`;
+    }
+    
+    container.innerHTML = html;
+    container.onclick = () => openPlayerModal(players);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// 打开玩家列表弹窗
+function openPlayerModal(players) {
+    const modal = document.getElementById('playerModal');
+    const list = document.getElementById('modalPlayerList');
+    const count = document.getElementById('playerCount');
+    
+    if (!modal || !list || !count) return;
+    
+    count.textContent = players.length;
+    list.innerHTML = players.map(p => 
+        `<span class="mcModalPlayerTag">${escapeHtml(p.name_clean)}</span>`
+    ).join('');
+    
+    modal.classList.add('active');
+}
+
+// 关闭玩家列表弹窗
+function closePlayerModal() {
+    const modal = document.getElementById('playerModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// 点击弹窗外部关闭
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('playerModal');
+    if (e.target === modal) {
+        closePlayerModal();
+    }
+});
+
+// 复制 IP（在对应位置显示反馈）
+function copyIp(text, tipId) {
+    navigator.clipboard.writeText(text).then(() => {
+        const tip = document.getElementById(tipId);
+        if (tip) {
+            tip.textContent = '已复制';
+            tip.classList.add('show');
+            
+            setTimeout(() => {
+                tip.classList.remove('show');
+            }, 1500);
+        }
+    }).catch(() => {
+        // 降级方案
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        
+        const tip = document.getElementById(tipId);
+        if (tip) {
+            tip.textContent = '已复制';
+            tip.classList.add('show');
+            setTimeout(() => tip.classList.remove('show'), 1500);
+        }
+    });
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    checkMCStatus();
+    setInterval(checkMCStatus, 30000);
+});
