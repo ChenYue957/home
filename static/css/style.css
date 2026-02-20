@@ -12,7 +12,6 @@
     font-display: swap;
 }
 
-
 * {
     font-family: "b", "a", sans-serif;
     cursor: url('../sb.cur'), auto;
@@ -78,20 +77,6 @@ html[data-theme="dack"] {
     --search-select-hover: rgba(255, 255, 255, 0.1);
     --search-select-bg: rgba(50, 50, 50, 0.5);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 body {
     display: flex;
@@ -207,9 +192,6 @@ body {
     }
 }
 
-
-
-
 .main {
     width: 100%;
     max-width: 1200px;
@@ -255,8 +237,6 @@ body {
     transition: all 0.8s ease-in-out;
    
 }
-
-
 
 .left-div {
     flex-shrink: 0;
@@ -322,8 +302,6 @@ body {
     color: #82888a;
 }
 
-
-
 .focus {
     width: 15px;
     height: 15px;
@@ -345,7 +323,6 @@ body {
     font-size: 20px;
     margin-top: 30px;
 }
-
 
 .right {
     width: calc(100% - 250px);
@@ -550,14 +527,11 @@ body {
     transform: translateY(0);
 }
 
-
 .projectItem:hover {
     border: 0.8px solid #747bff;
     box-shadow: 0 8px 16px -4px #2c2d300c;
     background-color: var(--project-item-hover-color, rgba(244, 245, 246, 0.8));
 }
-
-
 
 .projectItem:hover .projectItemLeft {
     width: 100%;
@@ -595,7 +569,6 @@ body {
     height: 100%;
     width: 80%;
 }
-
 
 .projectItemRight {
     overflow: hidden;
@@ -1005,7 +978,6 @@ footer {
 }
 
 @media (max-width: 1000px) {
-
     .projectItem {
         width: calc(100% - 25px);
     }
@@ -1341,7 +1313,6 @@ footer {
 .search-input::placeholder {
     color: rgba(255,255,255,0.4);
 }
-
 
 .search-btn {
     background: rgba(74, 222, 128, 0.15);

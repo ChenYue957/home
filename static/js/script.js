@@ -15,7 +15,6 @@ document.addEventListener('contextmenu', function(event) {
   event.preventDefault(); // 阻止默认的上下文菜单行为
 });
 
-
 function toggleClass(selector, className) {
     var elements = document.querySelectorAll(selector);
     elements.forEach(function (element) {
@@ -55,18 +54,13 @@ function wx(imageURL) {
     }
     toggleClass(".tc-main", "active");
     toggleClass(".tc", "active");
-
-
-
 }
-
 
 function left() {
     toggleClass(".left-main", "left-main-open");
     toggleClass(".left", "left-open");
 
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const randomTexts = ["博主 26年02月19日 在线", "别戳我啦"];
@@ -99,9 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var svgItems = document.getElementsByTagName("svg");
     var tanChiShe = document.getElementById("tanChiShe");
 
-
-
-
     function changeSvg(color) {
         for (var i = 0; i < svgItems.length; i++) {
             var paths = svgItems[i].getElementsByTagName("path");
@@ -110,8 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
-
-
 
     function changeTheme(theme) {
         if (theme == "Dark") {
@@ -127,8 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         setCookie("themeState", theme, 365);
     }
-
-
 
     const switchCheckbox = document.getElementById('myonoffswitch');
     /*夜间自动打开暗色主题*/
@@ -156,9 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     changeTheme(themeState);
 
-
-
-
     /*淡入效果*/
     var projectItems = document.querySelectorAll(".projectItem");
     function checkProjectItems() {
@@ -182,8 +166,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener("scroll", checkProjectItems);
     window.addEventListener("resize", checkProjectItems);
-
-
 
     /*加载效果*/
     var pageLoading = document.querySelector("#PageLoading");
@@ -210,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const input = document.getElementById('searchInput');
         const btn = document.getElementById('searchBtn');
         
-
         // 获取当前选中的搜索引擎URL（实时查询）
         function getCurrentUrl() {
             const active = document.querySelector('.custom-select .option.active');
