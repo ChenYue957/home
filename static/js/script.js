@@ -16,14 +16,6 @@ document.addEventListener('contextmenu', function(event) {
 });
 
 
-
-
-
-
-
-
-
-
 function toggleClass(selector, className) {
     var elements = document.querySelectorAll(selector);
     elements.forEach(function (element) {
@@ -77,12 +69,10 @@ function left() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    // 随机显示两条文本的函数
     const randomTexts = ["博主 26年02月19日 在线", "别戳我啦"];
     const textElement = document.getElementById("randomText");
     let lastUpdateTime = 0;
-    const throttleDelay = 1000; // 1秒内最多更新一次
+    const throttleDelay = 1000;
     
     function updateRandomText() {
         const now = Date.now();
@@ -210,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
             pageLoading.style.backgroundSize = "200%";
         });
     });
-    // ===== 搜索框功能（确保版）=====
+    //搜索框功能
     (function() {
         // 获取元素
         const customSelect = document.querySelector('.custom-select');
