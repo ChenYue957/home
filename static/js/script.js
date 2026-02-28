@@ -59,7 +59,6 @@ function wx(imageURL) {
 function left() {
     toggleClass(".left-main", "left-main-open");
     toggleClass(".left", "left-open");
-
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -126,14 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
         changeTheme('Dark');
     }
 
-
     switchCheckbox.addEventListener('change', function () {
         if (themeState == "Dark") {
-
             changeTheme("Blue");
-
         } else if (themeState == "Blue") {
-
             changeTheme("Dark");
         }
     });
@@ -149,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var i = 0; i < projectItems.length; i++) {
             var projectItem = projectItems[i];
             var projectItemTop = projectItem.getBoundingClientRect().top;
-
             if (projectItemTop < window.innerHeight * 1.2) {
                 projectItem.classList.add("fade-in-visible");
             }

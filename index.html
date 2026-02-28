@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="./static/css/style.css?v=1.33">
 </head>
 
+
+<body>
 <!-- 域名安全提示 -->
 <div id="domainTip" class="domain-tip">
     <div class="tip-header">
@@ -40,8 +42,6 @@
         <a href="https://chenyue957.github.io/home/" class="tip-btn btn-jump">GitHub备线</a>
     </div>
 </div>
-
-<body>
 <!-- 刷新加载动画 -->
 <div id="PageLoading">
     <div id="PageLoading-尘钥ChenYue">
@@ -53,6 +53,29 @@
         </div>
     </div>
 </div>
+
+<script>
+// 搜索框功能
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const searchEngine = document.getElementById('searchEngine');
+
+function performSearch() {
+    const query = searchInput.value.trim();
+    if (query) {
+        const engineUrl = searchEngine.value;
+        window.open(engineUrl + encodeURIComponent(query), '_blank');
+        searchInput.value = '';
+    }
+}
+
+searchBtn.addEventListener('click', performSearch);
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+</script>
 
 <div class="main">
 
@@ -699,28 +722,7 @@
 
 </body>
 
-<script>
-// 搜索框功能
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const searchEngine = document.getElementById('searchEngine');
 
-function performSearch() {
-    const query = searchInput.value.trim();
-    if (query) {
-        const engineUrl = searchEngine.value;
-        window.open(engineUrl + encodeURIComponent(query), '_blank');
-        searchInput.value = '';
-    }
-}
-
-searchBtn.addEventListener('click', performSearch);
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
-});
-</script>
 
 <script src="./static/js/script.js?v=1.33"> </script>
 
