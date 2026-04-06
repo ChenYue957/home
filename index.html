@@ -162,52 +162,63 @@ searchInput.addEventListener('keypress', (e) => {
                     养正中学、毓英中学
                 </div>
             </div>
-            <div class="left-div left-tag">
-                <div class="left-div-item">
+            <div class="left-div left-tag" style="padding: 10px 12px;">
+                <div class="left-div-item" style="margin-bottom: 6px;">
                     <svg t="1705257823317" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                        xmlns="http://www.w3.org/2000/svg" p-id="2474" width="20px" height="20px">
+                        xmlns="http://www.w3.org/2000/svg" p-id="2474" width="18px" height="18px">
                         <path
                             d="M395.765333 586.570667h-171.733333c-22.421333 0-37.888-22.442667-29.909333-43.381334L364.768 95.274667A32 32 0 0 1 394.666667 74.666667h287.957333c22.72 0 38.208 23.018667 29.632 44.064l-99.36 243.882666h187.050667c27.509333 0 42.186667 32.426667 24.042666 53.098667l-458.602666 522.56c-22.293333 25.408-63.626667 3.392-54.976-29.28l85.354666-322.421333zM416.714667 138.666667L270.453333 522.581333h166.869334a32 32 0 0 1 30.933333 40.181334l-61.130667 230.954666 322.176-367.114666H565.312c-22.72 0-38.208-23.018667-29.632-44.064l99.36-243.882667H416.714667z"
                             fill="#666666" p-id="2475"></path>
                     </svg>
-                    兴趣爱好
+                    <span style="font-size: 14px;">兴趣爱好</span>
                 </div>
-                <div style="width: 100%;"></div>
-                <div class="left-tag-item">
-                    计算机
+                
+                <!-- 技术类 -->
+                <div class="tag-row">
+                    <span class="cat-badge tech">技术</span>
+                    <div class="tag-chips">
+                        <a class="tag-chip" href="javascript:void(0)">计算机</a>
+                        <a class="tag-chip" href="javascript:void(0)">前端</a>
+                        <a class="tag-chip" href="javascript:void(0)">数码</a>
+                        <a class="tag-chip" href="javascript:void(0)">单片机</a>
+                        <a class="tag-chip" href="javascript:void(0)">服务器</a>
+                        <a class="tag-chip" href="javascript:void(0)">NAS</a>
+                        <a class="tag-chip" href="javascript:void(0)">智能家居</a>
+                        <a class="tag-chip" href="javascript:void(0)">HA</a>
+                    </div>
                 </div>
-                <div class="left-tag-item">
-                    羽毛球
+                
+                <!-- 户外 -->
+                <div class="tag-row">
+                    <span class="cat-badge outdoor">户外</span>
+                    <div class="tag-chips">
+                        <a class="tag-chip" href="javascript:void(0)">羽毛球</a>
+                        <a class="tag-chip" href="javascript:void(0)">骑行</a>
+                        <a class="tag-chip" href="javascript:void(0)">摄影</a>
+                        <a class="tag-chip" href="javascript:void(0)">无人机</a>
+                        <a class="tag-chip" href="javascript:void(0)">航拍</a>
+                    </div>
                 </div>
-                <div class="left-tag-item">
-                    骑行
+                
+                <!-- 创造 -->
+                <div class="tag-row">
+                    <span class="cat-badge maker">创造</span>
+                    <div class="tag-chips">
+                        <a class="tag-chip" href="javascript:void(0)">3D打印</a>
+                        <a class="tag-chip" href="javascript:void(0)">LEGO</a>
+                        <a class="tag-chip" href="javascript:void(0)">手工</a>
+                        <a class="tag-chip" href="javascript:void(0)">收纳</a>
+                    </div>
                 </div>
-                <div class="left-tag-item">
-                    MC
-                </div>
-                <div class="left-tag-item">
-                    智能家居
-                </div>
-                <div class="left-tag-item">
-                    LEGO
-                </div>
-                <div class="left-tag-item">
-                    前端
-                </div>
-                <div class="left-tag-item">
-                    自动化
-                </div>
-                 <div class="left-tag-item">
-                    服务器
-                </div>
-                <div class="left-tag-item">
-                    无人机
-                </div>
-                <div class="left-tag-item">
-                    摄影
-                </div>
-                <div class="left-tag-item">
-                    nas
+                
+                <!-- 其他 -->
+                <div class="tag-row">
+                    <span class="cat-badge other">其他</span>
+                    <div class="tag-chips">
+                        <a class="tag-chip" href="javascript:void(0)">MC</a>
+                        <a class="tag-chip" href="javascript:void(0)">移动电源</a>
+                        <a class="tag-chip" href="javascript:void(0)">充电宝</a>
+                    </div>
                 </div>
             </div>
 
@@ -216,9 +227,14 @@ searchInput.addEventListener('keypress', (e) => {
                 <ul id="line">
                     <li>
                         <div class="focus"></div>
-                        <div>2026-02-20</div>
+                        <div>2026-04-06</div>
                         <div>敬请期待</div>
                     </li>   
+                    <li>
+                        <div class="focus"></div>
+                        <div>2026-04-06</div>
+                        <div>新服整体部署完毕，修改兴趣框架及内容</div>
+                    </li>
                     <li>
                         <div class="focus"></div>
                         <div>2026-02-19</div>
@@ -438,6 +454,42 @@ searchInput.addEventListener('keypress', (e) => {
                     <!-- 项目项结束 -->
                 </a>
                 <!---->
+                <a class="projectItem" target="_blank" href="https://space.bilibili.com/512180655">
+                    <!-- 项目项开始 -->
+                    <div class="projectItemLeft">
+                        <h1>尘钥ChenYue的B站</h1>
+                        <p>尊贵的巴拉巴拉硬核小会员</p>
+                    </div>
+                    <div class="projectItemRight">
+                        <img src="./static/img/Bzhan.png" alt="">
+                    </div>
+                    <!-- 项目项结束 -->
+                </a>
+                <!----> 
+                <a class="projectItem" target="_blank" href="https://music.163.com/#/playlist?id=8001178403">
+                    <!-- 项目项开始 -->
+                    <div class="projectItemLeft">
+                        <h1>尘钥ChenYue的网易云</h1>
+                        <p>尊贵的LV9 SVIP用户</p>
+                    </div>
+                    <div class="projectItemRight">
+                        <img src="./static/img/wwy.png" alt="">
+                    </div>
+                    <!-- 项目项结束 -->
+                </a>
+                <!---->
+                <a class="projectItem" target="_blank" href="https://pve.chenyue.art:8006">
+                    <!-- 项目项开始 -->
+                    <div class="projectItemLeft">
+                        <h1>尘钥ChenYue的服务器 主</h1>
+                        <p>PVE后台</p>
+                    </div>
+                    <div class="projectItemRight">
+                        <img src="./static/img/pve.png" alt="">
+                    </div>
+                    <!-- 项目项结束 -->
+                </a>
+                <!---->
                 <a class="projectItem" target="_blank" href="https://nas.chenyue.art:5667">
                     <!-- 项目项开始 -->
                     <div class="projectItemLeft">
@@ -446,6 +498,18 @@ searchInput.addEventListener('keypress', (e) => {
                     </div>
                     <div class="projectItemRight">
                         <img src="./static/img/fnos.png" alt="">
+                    </div>
+                    <!-- 项目项结束 -->
+                </a>
+                <!---->
+                <a class="projectItem" target="_blank" href="https://pve2.chenyue.art:8006">
+                    <!-- 项目项开始 -->
+                    <div class="projectItemLeft">
+                        <h1>尘钥ChenYue的服务器 备</h1>
+                        <p>迷你服务器PVE后台</p>
+                    </div>
+                    <div class="projectItemRight">
+                        <img src="./static/img/pve.png" alt="">
                     </div>
                     <!-- 项目项结束 -->
                 </a>
@@ -461,55 +525,7 @@ searchInput.addEventListener('keypress', (e) => {
                     </div>
                     <!-- 项目项结束 -->
                 </a>
-                <!---->
-                 <a class="projectItem" target="_blank" href="https://pve.chenyue.art:8006">
-                    <!-- 项目项开始 -->
-                    <div class="projectItemLeft">
-                        <h1>尘钥ChenYue的服务器</h1>
-                        <p>PVE后台</p>
-                    </div>
-                    <div class="projectItemRight">
-                        <img src="./static/img/pve.png" alt="">
-                    </div>
-                    <!-- 项目项结束 -->
-                </a>
-                <!---->
-                <a class="projectItem" target="_blank" href="https://music.163.com/#/playlist?id=8001178403">
-                    <!-- 项目项开始 -->
-                    <div class="projectItemLeft">
-                        <h1>尘钥ChenYue的网易云</h1>
-                        <p>尊贵的LV9 SVIP用户</p>
-                    </div>
-                    <div class="projectItemRight">
-                        <img src="./static/img/wwy.png" alt="">
-                    </div>
-                    <!-- 项目项结束 -->
-                </a>
-                <!---->
-                <a class="projectItem" target="_blank" href="https://space.bilibili.com/512180655">
-                    <!-- 项目项开始 -->
-                    <div class="projectItemLeft">
-                        <h1>尘钥ChenYue的B站</h1>
-                        <p>尊贵的巴拉巴拉硬核小会员</p>
-                    </div>
-                    <div class="projectItemRight">
-                        <img src="./static/img/Bzhan.png" alt="">
-                    </div>
-                    <!-- 项目项结束 -->
-                </a>
-                <!---->
-                <a class="projectItem" target="_blank" href="https://v.douyin.com/C3E-FgE2HPA/%205@3.com%20:1pm">
-                    <!-- 项目项开始 -->
-                    <div class="projectItemLeft">
-                        <h1>尘钥ChenYue的抖音</h1>
-                        <p>啥都没有</p>
-                    </div>
-                    <div class="projectItemRight">
-                        <img src="./static/img/tiktok.png" alt="">
-                    </div>
-                    <!-- 项目项结束 -->
-                </a>
-                <!---->
+                <!---->               
             </div>
             <!-- 内容结束 -->
             

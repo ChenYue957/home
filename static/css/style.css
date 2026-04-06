@@ -238,6 +238,124 @@ body {
    
 }
 
+/* 兴趣爱好 - 紧凑科技风 */
+.tag-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.tag-row:last-child {
+    margin-bottom: 0;
+}
+
+.cat-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 科技感配色 - 白色模式加深 */
+.cat-badge.tech {
+    background: rgba(0, 180, 200, 0.2);
+    color: #0088a0;
+    border: 1px solid rgba(0, 180, 200, 0.5);
+}
+
+.cat-badge.outdoor {
+    background: rgba(0, 160, 100, 0.2);
+    color: #007a4d;
+    border: 1px solid rgba(0, 160, 100, 0.5);
+}
+
+.cat-badge.maker {
+    background: rgba(150, 0, 200, 0.2);
+    color: #7a00a0;
+    border: 1px solid rgba(150, 0, 200, 0.5);
+}
+
+.cat-badge.other {
+    background: rgba(100, 100, 100, 0.2);
+    color: #555;
+    border: 1px solid rgba(100, 100, 100, 0.5);
+}
+
+.tag-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    flex: 1;
+}
+
+/* 标签改为链接样式，保留自定义光标 */
+.tag-chip {
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: #444;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    cursor: inherit;
+}
+
+.tag-chip:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+    color: #000;
+}
+
+/* 暗黑模式 - 恢复发光效果 */
+html[data-theme="dack"] .cat-badge.tech {
+    background: rgba(0, 240, 255, 0.12);
+    color: #00f0ff;
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+html[data-theme="dack"] .cat-badge.outdoor {
+    background: rgba(0, 255, 136, 0.12);
+    color: #00ff88;
+    border-color: rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
+}
+
+html[data-theme="dack"] .cat-badge.maker {
+    background: rgba(189, 0, 255, 0.12);
+    color: #d946ef;
+    border-color: rgba(189, 0, 255, 0.4);
+    box-shadow: 0 0 8px rgba(189, 0, 255, 0.2);
+}
+
+html[data-theme="dack"] .cat-badge.other {
+    background: rgba(128, 128, 128, 0.12);
+    color: #9ca3af;
+    border-color: rgba(128, 128, 128, 0.4);
+}
+
+html[data-theme="dack"] .tag-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #b0b0b0;
+}
+
+html[data-theme="dack"] .tag-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
 .left-div {
     flex-shrink: 0;
     width: 100%;
