@@ -421,49 +421,47 @@ function initDomainTip() {
     }, 500);
 }
 
-// 动态设置博客链接
+function resolveSiteUrl(type) {
+    const host = window.location.host;
+    const pathname = window.location.pathname;
+    const isChenYueTop = host.includes('chenyue.top');
+    const isChenYueArt957 = host.includes('chenyue.art:957');
+    const isGithubHome = host.includes('github.io') && pathname.includes('/home/');
+
+    switch (type) {
+        case 'blog':
+            if (isChenYueTop) return 'https://blog.chenyue.top';
+            if (isChenYueArt957) return 'https://blog.chenyue.art:958';
+            if (isGithubHome) return 'https://chenyue957.github.io/blog/';
+            return 'https://blog.chenyue.top';
+        case 'intro':
+            if (isChenYueTop) return 'https://blog.chenyue.top/posts/你好我是尘钥chenyue/';
+            if (isChenYueArt957) return 'https://blog.chenyue.art:958/posts/你好我是尘钥chenyue/';
+            if (isGithubHome) return 'https://chenyue957.github.io/blog/posts/你好我是尘钥chenyue/';
+            return 'https://blog.chenyue.top/posts/你好我是尘钥chenyue/';
+        case 'home':
+            if (isChenYueTop || isChenYueArt957 || isGithubHome) return '/';
+            return 'https://chenyue.top';
+        default:
+            return 'https://chenyue.top';
+    }
+}
+
+// 动态设置网站跳转
 (function() {
     const blogLink = document.getElementById('blogLink');
-    if (!blogLink) {
+    if (blogLink) {
+        blogLink.href = resolveSiteUrl('blog');
+    } else {
         console.warn('blogLink 元素未找到');
-        return;
     }
 
-    const host = window.location.host;
-    const pathname = window.location.pathname;
-
-    let blogUrl = 'https://blog.chenyue.top'; // 默认
-
-    if (host.includes('chenyue.top')) {
-        blogUrl = 'https://blog.chenyue.top';
-    } else if (host.includes('chenyue.art:957')) {
-        blogUrl = 'https://blog.chenyue.art:958';
-    } else if (host.includes('github.io') && pathname.includes('/home/')) {
-        blogUrl = 'https://chenyue957.github.io/blog/';
-    }
-
-    blogLink.href = blogUrl;        
-})();
-
-// 动态设置个人主页跳转
-(function() {
     const homeLink = document.getElementById('homeLink');
-    if (!homeLink) {
+    if (homeLink) {
+        homeLink.href = resolveSiteUrl('intro');
+    } else {
         console.warn('homeLink 元素未找到');
-        return;
     }
-
-    const host = window.location.host;
-    const pathname = window.location.pathname;
-
-    let homeUrl = '/'; // 默认回到当前站点根
-
-    // 如果不在列表中，跳转到 chenyue.top
-    if (!host.includes('chenyue.top') && !host.includes('chenyue.art:957') && !(host.includes('github.io') && pathname.includes('/home/'))) {
-        homeUrl = 'https://chenyue.top';
-    }
-
-    homeLink.href = homeUrl;
 })();
 
 // 显示域名选择器（清空记录并重新显示）
