@@ -54,28 +54,6 @@
     </div>
 </div>
 
-<script>
-// 搜索框功能
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const searchEngine = document.getElementById('searchEngine');
-
-function performSearch() {
-    const query = searchInput.value.trim();
-    if (query) {
-        const engineUrl = searchEngine.value;
-        window.open(engineUrl + encodeURIComponent(query), '_blank');
-        searchInput.value = '';
-    }
-}
-
-searchBtn.addEventListener('click', performSearch);
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
-});
-</script>
 
 <div class="main">
 
@@ -108,9 +86,9 @@ searchInput.addEventListener('keypress', (e) => {
                                 </span>
                                 <span class="option-name">必应</span>
                             </div>
-                            <div class="option" data-value="https://www.google.com/search?q=">
+                            <div class="option" data-value="https://www.google.cn/search?q=">
                                 <span class="option-icon">
-                                    <img src="https://www.google.com/favicon.ico" width="16" height="16" style="border-radius: 2px; display: block;">
+                                    <img src="https://www.google.com/images/branding/product/ico/googleg_lodp.ico" width="16" height="16" style="border-radius: 2px; display: block;">
                                 </span>
                                 <span class="option-name">Google</span>
                             </div>

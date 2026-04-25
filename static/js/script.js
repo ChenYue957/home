@@ -1,4 +1,4 @@
-console.log('%c2026 chenyue.top  chenyue.top', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
+console.log('%c2026 chenyue.top  chenyue.art', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
 console.log('%c   /\\_/\\', 'color: #8B4513; font-size: 20px;');
 console.log('%c  ( o.o )', 'color: #8B4513; font-size: 20px;');
 console.log(' %c  > ^ <', 'color: #8B4513; font-size: 20px;');
@@ -720,8 +720,17 @@ function copyIp(text, tipId) {
     });
 }
 
-// 初始化
+// 初始化：页面完全加载并空闲后再检测 MC，绝不阻塞首屏渲染
 document.addEventListener('DOMContentLoaded', () => {
-    checkMCStatus();
-    setInterval(checkMCStatus, 30000);
+    var runMCCheck = function() {
+        checkMCStatus();
+        setInterval(checkMCStatus, 30000);
+    };
+    
+    // 优先使用 requestIdleCallback，不支持则回退到 setTimeout
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(runMCCheck, { timeout: 3000 });
+    } else {
+        setTimeout(runMCCheck, 200);
+    }
 });
