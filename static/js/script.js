@@ -720,8 +720,17 @@ function copyIp(text, tipId) {
     });
 }
 
-// 初始化
+// 初始化：页面完全加载并空闲后再检测 MC，绝不阻塞首屏渲染
 document.addEventListener('DOMContentLoaded', () => {
-    checkMCStatus();
-    setInterval(checkMCStatus, 30000);
+    const runMCCheck = function() {
+        checkMCStatus();
+        setInterval(checkMCStatus, 30000);
+    };
+
+    // 优先使用 requestIdleCallback，不支持则回退到 setTimeout
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(runMCCheck, { timeout: 3000 });
+    } else {
+        setTimeout(runMCCheck, 200);
+    }
 });
