@@ -55,7 +55,28 @@
     </div>
 </div>
 
-
+<!-- 搜索框兜底绑定（已修复执行时机，避免 DOM 未渲染时报错） -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (window._searchInitialized) return;
+    var searchInput = document.getElementById('searchInput');
+    var searchBtn = document.getElementById('searchBtn');
+    if (!searchInput || !searchBtn) return;
+    function performSearch() {
+        var query = searchInput.value.trim();
+        if (query) {
+            var activeOption = document.querySelector('.custom-select .option.active');
+            var engineUrl = activeOption ? activeOption.getAttribute('data-value') : 'https://www.bing.com/search?q=';
+            window.open(engineUrl + encodeURIComponent(query), '_blank');
+            searchInput.value = '';
+        }
+    }
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') performSearch();
+    });
+});
+</script>
 
 <div class="main">
 

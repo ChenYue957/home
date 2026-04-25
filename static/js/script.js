@@ -1,4 +1,4 @@
-console.log('%c2026 chenyue.top  chenyue.top', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
+console.log('%c2026 chenyue.top  chenyue.art', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
 console.log('%c   /\\_/\\', 'color: #8B4513; font-size: 20px;');
 console.log('%c  ( o.o )', 'color: #8B4513; font-size: 20px;');
 console.log(' %c  > ^ <', 'color: #8B4513; font-size: 20px;');
@@ -178,6 +178,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     //搜索框功能
     (function() {
+        // 标记搜索功能已初始化（供内联兜底脚本检测，避免重复绑定）
+        window._searchInitialized = true;
+
         // 获取元素
         const customSelect = document.querySelector('.custom-select');
         const trigger = document.querySelector('.select-trigger');
@@ -722,7 +725,7 @@ function copyIp(text, tipId) {
 
 // 初始化：页面完全加载并空闲后再检测 MC，绝不阻塞首屏渲染
 document.addEventListener('DOMContentLoaded', () => {
-    const runMCCheck = function() {
+    var runMCCheck = function() {
         checkMCStatus();
         setInterval(checkMCStatus, 30000);
     };
