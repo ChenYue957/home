@@ -720,8 +720,8 @@ function copyIp(text, tipId) {
     });
 }
 
-// 初始化：页面完全加载并空闲后再检测 MC，绝不阻塞首屏渲染
-document.addEventListener('DOMContentLoaded', () => {
+// 等所有静态资源（图片、CSS、字体等）加载完成后，再检测 MC
+window.addEventListener('load', () => {
     var runMCCheck = function() {
         checkMCStatus();
         setInterval(checkMCStatus, 30000);

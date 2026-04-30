@@ -1838,11 +1838,12 @@ html[data-theme="dack"] .btn-jump:hover {
 /* 移动端 */
 @media screen and (max-width: 600px) {
     .domain-tip {
-        top: 10px;
+        top: auto;
+        bottom: 10px;
         left: 10px;
         right: 10px;
         width: auto;
-        transform: translateY(-150%);
+        transform: translateY(150%);
     }
     
     .domain-tip.show {
