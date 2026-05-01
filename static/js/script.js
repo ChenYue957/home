@@ -1,3 +1,10 @@
+/* ============================================================
+   script.js — 尘钥ChenYue 个人主页脚本
+   ============================================================ */
+
+
+/* ===== 控制台彩蛋 ===== */
+
 console.log('%c2026 chenyue.top  chenyue.art', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
 console.log('%c   /\\_/\\', 'color: #8B4513; font-size: 20px;');
 console.log('%c  ( o.o )', 'color: #8B4513; font-size: 20px;');
@@ -6,15 +13,20 @@ console.log('  %c /  ~ \\', 'color: #8B4513; font-size: 20px;');
 console.log('  %c/______\\', 'color: #8B4513; font-size: 20px;');
 
 
-
-
-
-
+/* ===== 禁用右键菜单 ===== */
 
 document.addEventListener('contextmenu', function(event) {
-  event.preventDefault(); // 阻止默认的上下文菜单行为
+  event.preventDefault();
 });
 
+
+/* ===== 通用工具函数 ===== */
+
+/**
+ * 切换指定元素的 class
+ * @param {string} selector - CSS 选择器
+ * @param {string} className - 要切换的类名
+ */
 function toggleClass(selector, className) {
     var elements = document.querySelectorAll(selector);
     elements.forEach(function (element) {
@@ -22,6 +34,12 @@ function toggleClass(selector, className) {
     });
 }
 
+/**
+ * 设置 Cookie
+ * @param {string} name - Cookie 名称
+ * @param {string} value - Cookie 值
+ * @param {number} days - 过期天数
+ */
 function setCookie(name, value, days) {
     var expires = "";
     if (days) {
@@ -32,6 +50,11 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
+/**
+ * 获取 Cookie
+ * @param {string} name - Cookie 名称
+ * @returns {string|null} Cookie 值
+ */
 function getCookie(name) {
     var nameEQ = name + "=";
     var cookies = document.cookie.split(';');
@@ -47,22 +70,33 @@ function getCookie(name) {
     return null;
 }
 
-function wx(imageURL) {
-    var tcMainElement = document.querySelector(".tc-img");
-    if (imageURL) {
-        tcMainElement.src = imageURL;
-    }
-    toggleClass(".tc-main", "active");
-    toggleClass(".tc", "active");
+/**
+ * HTML 转义（防 XSS）
+ * @param {string} text - 原始文本
+ * @returns {string} 转义后的 HTML
+ */
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
-function left() {
-    toggleClass(".left-main", "left-main-open");
-    toggleClass(".left", "left-open");
-}
+
+/* ===== DOMContentLoaded 主初始化 ===== */
 
 document.addEventListener('DOMContentLoaded', function () {
-    const randomTexts = ["博主 26年02月19日 在线", "别戳我啦"];
+
+    /* ----- 随机文字（头像 hover 提示） ----- */
+    // 从时间线自动同步最后修改日期
+    const firstLi = document.querySelector('#line li');
+    let latestDate = "未知日期";
+    if (firstLi) {
+        const dateDiv = firstLi.querySelectorAll('div');
+        if (dateDiv.length >= 2) {
+            latestDate = dateDiv[1].textContent.trim();
+        }
+    }
+    const randomTexts = ["博主 " + latestDate + " 在线", "别戳我啦"];
     const textElement = document.getElementById("randomText");
     let lastUpdateTime = 0;
     const throttleDelay = 1000;
@@ -87,11 +121,17 @@ document.addEventListener('DOMContentLoaded', function () {
         textElement.addEventListener('mousemove', updateRandomText);
     }
 
+
+    /* ----- 主题切换（明/暗色） ----- */
     var themeState = getCookie("themeState") || "Blue";
     const htmlTag = document.querySelector('html');
     var svgItems = document.getElementsByTagName("svg");
     var tanChiShe = document.getElementById("tanChiShe");
 
+    /**
+     * 批量修改所有 SVG 填充色
+     * @param {string} color - 目标颜色值
+     */
     function changeSvg(color) {
         for (var i = 0; i < svgItems.length; i++) {
             var paths = svgItems[i].getElementsByTagName("path");
@@ -101,6 +141,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /**
+     * 切换主题
+     * @param {string} theme - "Dark" 或 "Blue"
+     */
     function changeTheme(theme) {
         if (theme == "Dark") {
             themeState = "Dark";
@@ -117,7 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const switchCheckbox = document.getElementById('myonoffswitch');
-    /*夜间自动打开暗色主题*/
+
+    /* 夜间自动打开暗色主题（20:00 ~ 06:00） */
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
     if (currentHour >= 20 || currentHour < 6) {
@@ -125,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
         changeTheme('Dark');
     }
 
+    // 开关切换事件
     switchCheckbox.addEventListener('change', function () {
         if (themeState == "Dark") {
             changeTheme("Blue");
@@ -133,13 +179,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // 恢复上次主题状态
     if (themeState == "Dark") {
         switchCheckbox.checked = false;
     }
     changeTheme(themeState);
 
-    /*淡入效果*/
+
+    /* ----- 卡片淡入效果（滚动触发） ----- */
     var projectItems = document.querySelectorAll(".projectItem");
+
     function checkProjectItems() {
         for (var i = 0; i < projectItems.length; i++) {
             var projectItem = projectItems[i];
@@ -161,7 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener("scroll", checkProjectItems);
     window.addEventListener("resize", checkProjectItems);
 
-    /*加载效果*/
+
+    /* ----- 页面加载动画 ----- */
     var pageLoading = document.querySelector("#PageLoading");
     var center = document.getElementById("PageLoading-尘钥ChenYue-center");
         requestAnimationFrame(() => {
@@ -176,9 +226,10 @@ document.addEventListener('DOMContentLoaded', function () {
             pageLoading.style.backgroundSize = "200%";
         });
     });
-    //搜索框功能
+
+
+    /* ----- 搜索框功能 ----- */
     (function() {
-        // 获取元素
         const customSelect = document.querySelector('.custom-select');
         const trigger = document.querySelector('.select-trigger');
         const options = document.querySelectorAll('.option');
@@ -186,14 +237,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const input = document.getElementById('searchInput');
         const btn = document.getElementById('searchBtn');
         
-        // 获取当前选中的搜索引擎URL（实时查询）
+        /**
+         * 获取当前选中的搜索引擎 URL（实时查询）
+         * @returns {string} 搜索引擎 URL
+         */
         function getCurrentUrl() {
             const active = document.querySelector('.custom-select .option.active');
             if (!active) {
                 console.warn('没有找到 active 选项，使用默认必应');
                 return 'https://www.bing.com/search?q=';
             }
-            // 使用 dataset 获取（最可靠）
             const url = active.dataset.value;
             return url || 'https://www.bing.com/search?q=';
         }
@@ -215,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 options.forEach(o => o.classList.remove('active'));
                 this.classList.add('active');
                 
-                // 更新顶部图标 - 获取当前选中的img src
+                // 更新顶部图标
                 if (triggerIcon) {
                     const iconImg = this.querySelector('.option-icon img');
                     if (iconImg) {
@@ -228,14 +281,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // 点击外部关闭
+        // 点击外部关闭下拉
         document.addEventListener('click', function(e) {
             if (customSelect && !customSelect.contains(e.target)) {
                 customSelect.classList.remove('active');
             }
         });
 
-        // 执行搜索
+        /**
+         * 执行搜索
+         */
         function search() {
             if (!input) {
                 console.error('找不到输入框');
@@ -259,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
             input.value = '';
         }
 
-        // 绑定事件
+        // 绑定搜索事件
         if (btn) {
             btn.addEventListener('click', search);
         }
@@ -273,9 +328,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         
-        // 初始化：确保有一个 active
+        // 初始化：确保有一个 active 选项（默认必应）
         if (options.length > 0 && !document.querySelector('.option.active')) {
-            options[1].classList.add('active'); // 默认必应（第二个）
+            options[1].classList.add('active');
         }
 
         // 初始化域名提示
@@ -283,9 +338,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })();
 
-});
+    /* ----- 侧边栏遮罩点击关闭（移动端） ----- */
+    const leftPanel = document.querySelector('.left');
+    if (leftPanel) {
+        leftPanel.addEventListener('click', function(e) {
+            // 只在侧边栏打开时生效，且只点击遮罩背景（非 .left-main 内部）时关闭
+            if (leftPanel.classList.contains('left-open') && !e.target.closest('.left-main')) {
+                left();
+            }
+        });
+    }
 
-// 全局弹窗函数
+}); // DOMContentLoaded 结束
+
+
+/* ===== 弹窗函数（微信/赞助图片弹窗） ===== */
+
+/**
+ * 显示微信/赞助图片弹窗
+ * @param {string} imageURL - 图片路径
+ */
 function showWx(imageURL) {
     const tc = document.querySelector('.tc');
     const tcMain = document.querySelector('.tc-main');
@@ -301,9 +373,11 @@ function showWx(imageURL) {
     }, 300); // 等动画完成后再绑定
 }
 
+/**
+ * 点击弹窗外部关闭
+ */
 function closeWxOutside(e) {
     const tc = document.querySelector('.tc');
-    const tcMain = document.querySelector('.tc-main');
     
     // 点击背景遮罩关闭
     if (e.target === tc) {
@@ -311,7 +385,9 @@ function closeWxOutside(e) {
     }
 }
 
-// 统一关闭函数
+/**
+ * 关闭弹窗（统一关闭函数）
+ */
 function closeWx() {
     const tc = document.querySelector('.tc');
     const tcMain = document.querySelector('.tc-main');
@@ -323,6 +399,9 @@ function closeWx() {
     document.removeEventListener('click', closeWxOutside);
 }
 
+/**
+ * 关闭弹窗（兼容旧调用）
+ */
 function wx() {
     const tc = document.querySelector('.tc');
     const tcMain = document.querySelector('.tc-main');
@@ -334,11 +413,28 @@ function wx() {
     document.removeEventListener('click', closeWxOutside);
 }
 
-//邮箱点击复制
+
+/* ===== 侧边栏开关 ===== */
+
+/**
+ * 切换侧边栏显示/隐藏（移动端）
+ */
+function left() {
+    toggleClass(".left-main", "left-main-open");
+    toggleClass(".left", "left-open");
+}
+
+
+/* ===== 邮箱复制 ===== */
+
+/**
+ * 点击复制邮箱地址并显示反馈
+ * @param {HTMLElement} element - 触发元素
+ */
 function copyMail(element) {
     const text = 'xjr957@gmail.com';
     
-    // 复制
+    // 复制到剪贴板
     navigator.clipboard.writeText(text).catch(() => {
         const input = document.createElement('input');
         input.value = text;
@@ -366,7 +462,12 @@ function copyMail(element) {
     }, 500);
 }
 
-//域名安全提示 - 全局函数
+
+/* ===== 域名安全提示 ===== */
+
+/**
+ * 关闭域名安全提示
+ */
 function closeDomainTip() {
     var tipEl = document.getElementById('domainTip');
     if (!tipEl) {
@@ -380,12 +481,18 @@ function closeDomainTip() {
     }, 300);
 }
 
+/**
+ * 设置"不再提示"（写入 Cookie）
+ */
 function setNoTip() {
     setCookie('noDomainTip', 'true', 30);
     closeDomainTip();
 }
 
-// 初始化函数
+/**
+ * 初始化域名安全提示
+ * 判断当前域名是否为官方域名，决定提示样式
+ */
 function initDomainTip() {
     if (getCookie('noDomainTip') === 'true') {
         return;
@@ -421,6 +528,31 @@ function initDomainTip() {
     }, 500);
 }
 
+/**
+ * 显示域名选择器（清空"不再提示"记录并重新显示）
+ */
+function showDomainSelector() {
+    // 清空不再提示记录
+    setCookie('noDomainTip', 'false', -1);
+    
+    // 重置弹窗显示
+    var tipEl = document.getElementById('domainTip');
+    if (tipEl) {
+        tipEl.style.display = 'block';
+        // 强制重绘
+        tipEl.offsetHeight;
+        tipEl.classList.add('show');
+    }
+}
+
+
+/* ===== 多域名站点 URL 解析 ===== */
+
+/**
+ * 根据当前域名解析站点链接
+ * @param {string} type - 链接类型：'blog' | 'intro' | 'home'
+ * @returns {string} 对应域名下的完整 URL
+ */
 function resolveSiteUrl(type) {
     const host = window.location.host;
     const pathname = window.location.pathname;
@@ -447,7 +579,7 @@ function resolveSiteUrl(type) {
     }
 }
 
-// 动态设置网站跳转
+// 动态设置网站跳转链接
 (function() {
     const blogLink = document.getElementById('blogLink');
     if (blogLink) {
@@ -464,68 +596,39 @@ function resolveSiteUrl(type) {
     }
 })();
 
-// 显示域名选择器（清空记录并重新显示）
-function showDomainSelector() {
-    // 清空不再提示记录
-    setCookie('noDomainTip', 'false', -1);
-    
-    // 重置弹窗显示
-    var tipEl = document.getElementById('domainTip');
-    if (tipEl) {
-        tipEl.style.display = 'block';
-        // 强制重绘
-        tipEl.offsetHeight;
-        tipEl.classList.add('show');
-    }
-}
 
-// MC 服务器状态检测
+/* ===== MC 服务器状态检测 ===== */
+
 let allPlayers = [];
-let currentServer = 'ipv6'; // 'ipv6' 或 'frp'
+let currentServer = 'frp'; // 默认使用穿透节点（IPv6 暂未开放）
 
-// 检测 IPv6 地址（带超时，不阻塞）
-async function checkIPv6() {
+/**
+ * 通用 MC 状态查询（带超时）
+ * @param {string} host - 服务器地址
+ * @param {number} timeoutMs - 超时毫秒数
+ * @returns {Promise<{success: boolean, data?: object, error?: Error}>}
+ */
+async function queryMCStatus(host, timeoutMs) {
     try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 4000); // 4秒超时
+        const timeout = setTimeout(() => controller.abort(), timeoutMs);
         
-        const res = await fetch('https://api.mcstatus.io/v2/status/java/mcv6.chenyue.art', {
+        const res = await fetch('https://api.mcstatus.io/v2/status/java/' + host, {
             signal: controller.signal
         });
         clearTimeout(timeout);
         
         const data = await res.json();
-        if (data.online) {
-            return { success: true, data, type: 'ipv6' };
-        }
-        throw new Error('IPv6 offline');
+        return { success: !!(data && data.online), data };
     } catch (e) {
         return { success: false, error: e };
     }
 }
 
-// 检测内网穿透地址（带超时）
-async function checkFRP() {
-    try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 4000);
-        
-        const res = await fetch('https://api.mcstatus.io/v2/status/java/mc.chenyue.art', {
-            signal: controller.signal
-        });
-        clearTimeout(timeout);
-        
-        const data = await res.json();
-        if (data.online) {
-            return { success: true, data, type: 'frp' };
-        }
-        throw new Error('FRP offline');
-    } catch (e) {
-        return { success: false, error: e };
-    }
-}
-
-// 主检测函数（并行检测，哪个成功用哪个）
+/**
+ * 主检测函数
+ * 策略：FRP 优先（当前在线），IPv6 作为备用快速探测
+ */
 async function checkMCStatus() {
     const statusCard = document.getElementById('mcStatus');
     const serverIcon = document.getElementById('mcServerIcon');
@@ -544,63 +647,50 @@ async function checkMCStatus() {
     h1.textContent = '检测中...';
     ping.textContent = '查询服务器状态...';
     
-    // 并行检测两个地址（同时发起，不互相阻塞）
-    const [v6Result, frpResult] = await Promise.all([
-        checkIPv6(),
-        checkFRP()
-    ]);
-    //console.log('IPv6结果:', v6Result);
-    //console.log('FRP结果:', frpResult);
+    // 先快速检测 FRP（主要通道，超时 5 秒）
+    const frpResult = await queryMCStatus('mc.chenyue.art', 5000);
     
-    // 优先用 IPv6 的数据（如果在线）
+    if (frpResult.success) {
+        // FRP 在线 → 直接使用，同时后台快速探测 IPv6
+        currentServer = 'frp';
+        updateStatus(frpResult.data, '穿透');
+        if (dotV4) { dotV4.classList.remove('checking'); dotV4.classList.add('online'); }
+        if (frpResult.data.icon && serverIcon) serverIcon.src = frpResult.data.icon;
+        
+        // 后台探测 IPv6（不阻塞主流程，2 秒超时）
+        queryMCStatus('mcv6.chenyue.art', 2000).then(v6Result => {
+            if (dotV6) {
+                dotV6.classList.remove('checking');
+                dotV6.classList.add(v6Result.success ? 'online' : 'offline');
+            }
+        });
+        return;
+    }
+    
+    // FRP 失败 → 尝试 IPv6（给更多时间，5 秒）
+    const v6Result = await queryMCStatus('mcv6.chenyue.art', 5000);
+    
     if (v6Result.success) {
         currentServer = 'ipv6';
         updateStatus(v6Result.data, 'IPv6');
-        if (dotV6) {
-            dotV6.classList.remove('checking');
-            dotV6.classList.add('online');
-        }
-        if (dotV4) {
-            dotV4.classList.remove('checking');
-            dotV4.classList.add(frpResult.success ? 'online' : 'offline');
-        }
-        
-        if (v6Result.data.icon && serverIcon) {
-            serverIcon.src = v6Result.data.icon;
-        }
-    } 
-    // IPv6 失败但 FRP 成功
-    else if (frpResult.success) {
-        currentServer = 'frp';
-        updateStatus(frpResult.data, '穿透');
-        if (dotV6) {
-            dotV6.classList.remove('checking');
-            dotV6.classList.add('offline');
-        }
-        if (dotV4) {
-            dotV4.classList.remove('checking');
-            dotV4.classList.add('online');
-        }
-        
-        if (frpResult.data.icon && serverIcon) {
-            serverIcon.src = frpResult.data.icon;
-        }
-    } 
-    // 都失败
-    else {
-        currentServer = null;
-        updateOffline();
-        if (dotV6) {
-            dotV6.classList.remove('checking');
-            dotV6.classList.add('offline');
-        }
-        if (dotV4) {
-            dotV4.classList.remove('checking');
-            dotV4.classList.add('offline');
-        }
+        if (dotV6) { dotV6.classList.remove('checking'); dotV6.classList.add('online'); }
+        if (dotV4) { dotV4.classList.remove('checking'); dotV4.classList.add('offline'); }
+        if (v6Result.data.icon && serverIcon) serverIcon.src = v6Result.data.icon;
+        return;
     }
+    
+    // 都失败
+    currentServer = null;
+    updateOffline();
+    if (dotV6) { dotV6.classList.remove('checking'); dotV6.classList.add('offline'); }
+    if (dotV4) { dotV4.classList.remove('checking'); dotV4.classList.add('offline'); }
 }
 
+/**
+ * 更新状态卡片为在线
+ * @param {object} data - API 返回的服务器数据
+ * @param {string} type - 连接类型（IPv6 / 穿透）
+ */
 function updateStatus(data, type) {
     const statusCard = document.getElementById('mcStatus');
     const h1 = statusCard.querySelector('h1');
@@ -616,6 +706,9 @@ function updateStatus(data, type) {
     renderPlayerList(playerList, allPlayers);
 }
 
+/**
+ * 更新状态卡片为离线
+ */
 function updateOffline() {
     const statusCard = document.getElementById('mcStatus');
     const h1 = statusCard.querySelector('h1');
@@ -630,7 +723,11 @@ function updateOffline() {
     allPlayers = [];
 }
 
-// 渲染玩家列表（显示前3个）
+/**
+ * 渲染玩家列表（显示前 3 个，超出显示 +N 人）
+ * @param {HTMLElement} container - 列表容器
+ * @param {Array} players - 玩家数组
+ */
 function renderPlayerList(container, players) {
     if (!players || players.length === 0) {
         container.innerHTML = '<span class="mcPlayerTag empty">暂无玩家</span>';
@@ -652,13 +749,13 @@ function renderPlayerList(container, players) {
     container.onclick = () => openPlayerModal(players);
 }
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
 
-// 打开玩家列表弹窗
+/* ===== MC 玩家列表弹窗 ===== */
+
+/**
+ * 打开玩家列表弹窗
+ * @param {Array} players - 玩家数组
+ */
 function openPlayerModal(players) {
     const modal = document.getElementById('playerModal');
     const list = document.getElementById('modalPlayerList');
@@ -674,7 +771,9 @@ function openPlayerModal(players) {
     modal.classList.add('active');
 }
 
-// 关闭玩家列表弹窗
+/**
+ * 关闭玩家列表弹窗
+ */
 function closePlayerModal() {
     const modal = document.getElementById('playerModal');
     if (modal) {
@@ -690,7 +789,14 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// 复制 IP（在对应位置显示反馈）
+
+/* ===== IP 地址复制 ===== */
+
+/**
+ * 复制 IP 地址并在对应位置显示反馈
+ * @param {string} text - 要复制的文本
+ * @param {string} tipId - 提示元素 ID
+ */
 function copyIp(text, tipId) {
     navigator.clipboard.writeText(text).then(() => {
         const tip = document.getElementById(tipId);
@@ -720,11 +826,13 @@ function copyIp(text, tipId) {
     });
 }
 
-// 等所有静态资源（图片、CSS、字体等）加载完成后，再检测 MC
+
+/* ===== 页面加载完成后启动 MC 检测 ===== */
+
 window.addEventListener('load', () => {
     var runMCCheck = function() {
         checkMCStatus();
-        setInterval(checkMCStatus, 30000);
+        setInterval(checkMCStatus, 30000); // 每 30 秒刷新一次
     };
     
     // 优先使用 requestIdleCallback，不支持则回退到 setTimeout
