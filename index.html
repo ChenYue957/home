@@ -17,6 +17,32 @@
     <meta name="og:site_name" content="尘钥ChenYue">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./static/css/style.css?v=1.34">
+    <script>
+        (function () {
+            var saved = null;
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var c = cookies[i].replace(/^\s+/, '');
+                if (c.indexOf('themeState=') === 0) {
+                    saved = c.substring(11);
+                    break;
+                }
+            }
+            var theme;
+            if (saved === 'Dark' || saved === 'Blue') {
+                theme = saved;
+            } else {
+                try {
+                    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Blue';
+                } catch (e) {
+                    theme = 'Blue';
+                }
+            }
+            if (theme === 'Dark') {
+                document.documentElement.dataset.theme = 'dack';
+            }
+        })();
+    </script>
 </head>
 
 

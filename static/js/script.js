@@ -123,7 +123,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* ----- 主题切换（明/暗色） ----- */
-    var themeState = getCookie("themeState") || "Blue";
+    var savedTheme = getCookie("themeState");
+    var themeState;
+
+    /**
+     * 获取系统配色偏好，读取失败返回 "Blue"（浅色）
+     * @returns {string} "Dark" 或 "Blue"
+     */
+    function getSystemTheme() {
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return "Dark";
+            }
+        } catch (e) { /* 静默忽略 */ }
+        return "Blue";
+    }
+
+    // 优先读取用户手动保存的偏好，否则读取浏览器系统配色，失败则默认浅色
+    if (savedTheme === "Dark" || savedTheme === "Blue") {
+        themeState = savedTheme;
+    } else {
+        themeState = getSystemTheme();
+    }
+
     const htmlTag = document.querySelector('html');
     var svgItems = document.getElementsByTagName("svg");
     var tanChiShe = document.getElementById("tanChiShe");
@@ -162,15 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const switchCheckbox = document.getElementById('myonoffswitch');
 
-    /* 夜间自动打开暗色主题（20:00 ~ 06:00） */
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-    if (currentHour >= 20 || currentHour < 6) {
-        switchCheckbox.checked = false;
-        changeTheme('Dark');
-    }
-
-    // 开关切换事件
+    // 开关切换事件（手动切换后会记住用户选择）
     switchCheckbox.addEventListener('change', function () {
         if (themeState == "Dark") {
             changeTheme("Blue");
@@ -179,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // 恢复上次主题状态
+    // 应用主题状态并同步开关
     if (themeState == "Dark") {
         switchCheckbox.checked = false;
     }
