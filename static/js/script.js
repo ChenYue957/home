@@ -588,6 +588,10 @@ function resolveSiteUrl(type) {
         case 'home':
             if (isChenYueTop || isChenYueArt957 || isGithubHome) return '/';
             return 'https://chenyue.top';
+        case 'time':
+            if (host.includes('chenyue.art')) return 'https://time.chenyue.art:959';
+            if (isGithubHome) return '/time/';
+            return 'https://time.chenyue.top';
         default:
             return 'https://chenyue.top';
     }
@@ -607,6 +611,12 @@ function resolveSiteUrl(type) {
         homeLink.href = resolveSiteUrl('intro');
     } else {
         console.warn('homeLink 元素未找到');
+    }
+    const timeLink = document.getElementById('timeLink');
+    if (timeLink) {
+        timeLink.href = resolveSiteUrl('time');
+    } else {
+        console.warn('timeLink 元素未找到');
     }
 })();
 
