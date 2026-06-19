@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI法治创意家·头盔共治五力交互测评</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* 全局样式 */
+        * {
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f0f8ff;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-76c1.992 0 3.908-.681 5.388-1.842-2.494-2.494-6.552-4.14-11.388-4.14-8.837 0-16 7.163-16 16s7.163 16 16 16c4.836 0 8.894-1.646 11.388-4.142-1.161-1.48-2.396-3.396-2.396-5.388 0-3.866 3.134-7 7-7s7 3.134 7 7-3.134 7-7 7c-1.992 0-3.908.681-5.388 1.842 2.494 2.494 6.552 4.14 11.388 4.14 8.837 0 16-7.163 16-16s-7.163-16-16-16c-4.836 0-8.894 1.646-11.388 4.142 1.161 1.48 2.396 3.396 2.396 5.388 0 3.866-3.134 7-7 7s-7-3.134-7-7 3.134-7 7-7zm63 30c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7zm0-41c1.992 0 3.908-.681 5.388-1.842-2.494-2.494-6.552-4.14-11.388-4.14-8.837 0-16 7.163-16 16s7.163 16 16 16c4.836 0 8.894-1.646 11.388-4.142-1.161-1.48-2.396-3.396-2.396-5.388 0-3.866 3.134-7 7-7s7 3.134 7 7-3.134 7-7 7c-1.992 0-3.908.681-5.388 1.842 2.494 2.494 6.552 4.14 11.388 4.14 8.837 0 16-7.163 16-16s-7.163-16-16-16c-4.836 0-8.894 1.646-11.388 4.142 1.161 1.48 2.396 3.396 2.396 5.388 0 3.866-3.134 7-7 7s-7-3.134-7-7 3.134-7 7-7zM34 91c1.992 0 3.908-.681 5.388-1.842-2.494-2.494-6.552-4.14-11.388-4.14-8.837 0-16 7.163-16 16s7.163 16 16 16c4.836 0 8.894-1.646 11.388-4.142-1.161-1.48-2.396-3.396-2.396-5.388 0-3.866 3.134-7 7-7s7 3.134 7 7-3.134 7-7 7c-1.992 0-3.908.681-5.388 1.842 2.494 2.494 6.552 4.14 11.388 4.14 8.837 0 16-7.163 16-16s-7.163-16-16-16c-4.836 0-8.894 1.646-11.388 4.142 1.161 1.48 2.396 3.396 2.396 5.388 0 3.866-3.134 7-7 7s-7-3.134-7-7 3.134-7 7-7zm56-66c1.992 0 3.908-.681 5.388-1.842-2.494-2.494-6.552-4.14-11.388-4.14-8.837 0-16 7.163-16 16s7.163 16 16 16c4.836 0 8.894-1.646 11.388-4.142-1.161-1.48-2.396-3.396-2.396-5.388 0-3.866 3.134-7 7-7s7 3.134 7 7-3.134 7-7 7c-1.992 0-3.908.681-5.388 1.842 2.494 2.494 6.552 4.14 11.388 4.14 8.837 0 16-7.163 16-16s-7.163-16-16-16c-4.836 0-8.894 1.646-11.388 4.142 1.161 1.48 2.396 3.396 2.396 5.388 0 3.866-3.134 7-7 7s-7-3.134-7-7 3.134-7 7-7z" fill="%234a90e2" fill-opacity="0.05" fill-rule="evenodd"/></svg>');
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* 主容器 */
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        /* 标题 */
+        h2 {
+            color: #2c5aa0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* 模块 */
+        .block {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .block h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .block h3::before {
+            content: "🚦";
+            margin-right: 10px;
+        }
+
+        /* 打分区域 */
+        #scoreBox h4 {
+            color: #34495e;
+            margin: 20px 0 15px;
+            font-size: 16px;
+            border-bottom: 2px solid #e1f5fe;
+            padding-bottom: 5px;
+        }
+
+        .score-line {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .score-line:hover {
+            background-color: #e3f2fd;
+        }
+
+        .score-line label {
+            width: 120px;
+            font-weight: 500;
+            color: #4a6572;
+        }
+
+        .score-line input[type="range"] {
+            flex: 1;
+            margin: 0 15px;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .score-line input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .score-line input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #2980b9;
+        }
+
+        .score-line .val {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 16px;
+        }
+
+        /* 图表区域 */
+        .canvas-box {
+            display: flex;
+            gap: 25px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .chart-item {
+            width: 320px;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .chart-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .chart-item p {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        /* 方案填写 */
+        #planInput {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        #planInput:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        /* 按钮 */
+        button {
+            padding: 12px 28px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px 0 0;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* 结果 */
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            white-space: pre-line;
+            border-left: 4px solid #2ecc71;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .wrap {
+                padding: 20px;
+            }
+            .block {
+                padding: 20px;
+            }
+            .score-line {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .score-line label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .score-line input[type="range"] {
+                width: 100%;
+                margin: 0 0 5px 0;
+            }
+            .canvas-box {
+                flex-direction: column;
+                align-items: center;
+            }
+            button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h2>🚦 家校社头盔共治五项能力交互式测评系统 🚦</h2>
+
+        <!-- 一、打分模块 -->
+        <div class="block">
+            <h3>一、五力量化打分（0-5分，拖动滑块评分）</h3>
+            <div id="scoreBox">
+                <h4>🏫 【学校】五项能力打分</h4>
+                <div class="score-line"><label>宣传力</label><input type="range" min="0" max="5" step="1" class="sch" data-key="宣传力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>监督力</label><input type="range" min="0" max="5" step="1" class="sch" data-key="监督力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>激励力</label><input type="range" min="0" max="5" step="1" class="sch" data-key="激励力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>设施力</label><input type="range" min="0" max="5" step="1" class="sch" data-key="设施力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>共情力</label><input type="range" min="0" max="5" step="1" class="sch" data-key="共情力" value="3"><span class="val">3</span></div>
+
+                <h4>👨‍👩‍👧 【家庭】五项能力打分</h4>
+                <div class="score-line"><label>宣传力</label><input type="range" min="0" max="5" step="1" class="fam" data-key="宣传力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>监督力</label><input type="range" min="0" max="5" step="1" class="fam" data-key="监督力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>激励力</label><input type="range" min="0" max="5" step="1" class="fam" data-key="激励力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>设施力</label><input type="range" min="0" max="5" step="1" class="fam" data-key="设施力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>共情力</label><input type="range" min="0" max="5" step="1" class="fam" data-key="共情力" value="3"><span class="val">3</span></div>
+
+                <h4>🏘️ 【社区】五项能力打分</h4>
+                <div class="score-line"><label>宣传力</label><input type="range" min="0" max="5" step="1" class="com" data-key="宣传力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>监督力</label><input type="range" min="0" max="5" step="1" class="com" data-key="监督力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>激励力</label><input type="range" min="0" max="5" step="1" class="com" data-key="激励力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>设施力</label><input type="range" min="0" max="5" step="1" class="com" data-key="设施力" value="3"><span class="val">3</span></div>
+                <div class="score-line"><label>共情力</label><input type="range" min="0" max="5" step="1" class="com" data-key="共情力" value="3"><span class="val">3</span></div>
+            </div>
+            <button id="drawChart">📊 自动生成三方雷达图</button>
+        </div>
+
+        <!-- 二、雷达图展示 -->
+        <div class="block">
+            <h3>二、三方能力雷达图（自动渲染）</h3>
+            <div class="canvas-box">
+                <div class="chart-item"><canvas id="schChart"></canvas><p align="center">学校雷达图</p></div>
+                <div class="chart-item"><canvas id="famChart"></canvas><p align="center">家庭雷达图</p></div>
+                <div class="chart-item"><canvas id="comChart"></canvas><p align="center">社区雷达图</p></div>
+            </div>
+        </div>
+
+        <!-- 三、协同方案填写 -->
+        <div class="block">
+            <h3>三、强弱互补协同治理方案设计</h3>
+            <p>请选择两类主体，围绕“强项弥补弱项”撰写落地治理方案</p>
+            <textarea id="planInput" placeholder="示例：选取学校与社区协同。社区宣传力为强项，学校设施力存在短板；社区利用宣传资源入校开展头盔安全讲座，学校配套增设共享头盔置物架，双向补齐治理短板……"></textarea>
+            <button id="aiJudge">🤖 AI自动评级点评</button>
+            <div class="result" id="aiResult"></div>
+        </div>
+    </div>
+
+    <script>
+        // 滑块实时显示分值
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.oninput = function () {
+                this.nextElementSibling.innerText = this.value;
+            }
+        })
+
+        // 绘制雷达图
+        document.getElementById('drawChart').onclick = function () {
+            const labels = ["宣传力", "监督力", "激励力", "设施力", "共情力"]
+            const getVal = cls => Array.from(document.querySelectorAll(`.${cls}`)).map(i => Number(i.value))
+
+            const schData = getVal("sch")
+            const famData = getVal("fam")
+            const comData = getVal("com")
+
+            // 图表配置
+            const cfg = {
+                type: "radar",
+                options: {
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 5,
+                            ticks: {
+                                display: false
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12
+                                },
+                                color: '#333'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            }
+
+            // 学校雷达图
+            new Chart(document.getElementById("schChart"), {
+                ...cfg,
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "学校",
+                        data: schData,
+                        borderColor: "#3498db",
+                        backgroundColor: "rgba(52, 152, 219, 0.2)",
+                        pointBackgroundColor: "#3498db",
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                }
+            })
+
+            // 家庭雷达图
+            new Chart(document.getElementById("famChart"), {
+                ...cfg,
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "家庭",
+                        data: famData,
+                        borderColor: "#2ecc71",
+                        backgroundColor: "rgba(46, 204, 113, 0.2)",
+                        pointBackgroundColor: "#2ecc71",
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                }
+            })
+
+            // 社区雷达图
+            new Chart(document.getElementById("comChart"), {
+                ...cfg,
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "社区",
+                        data: comData,
+                        borderColor: "#e74c3c",
+                        backgroundColor: "rgba(231, 76, 60, 0.2)",
+                        pointBackgroundColor: "#e74c3c",
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                }
+            })
+
+            alert("✅ 雷达图生成完成！查看下方图表，梳理强弱短板后撰写协同方案")
+        }
+
+        // AI自动评级逻辑
+        document.getElementById('aiJudge').onclick = function () {
+            const text = document.getElementById("planInput").value.trim()
+            const resBox = document.getElementById("aiResult")
+
+            if (!text) {
+                resBox.innerText = "【AI评价】❌ 未填写协同方案，任务未完成，等级：水平一"
+                return
+            }
+
+            const hasStrong = text.includes("强项") || text.includes("优势")
+            const hasWeak = text.includes("弱项") || text.includes("短板")
+            const hasFive = ["宣传力", "监督力", "激励力", "设施力", "共情力"].some(k => text.includes(k))
+            const hasAction = text.length > 120
+
+            if (hasStrong && hasWeak && hasFive && hasAction) {
+                resBox.innerText = "【AI评价】🌟 等级：水平三\n1. 雷达图数据完整，分值赋值合理；\n2. 方案清晰体现强弱互补，举措贴合五项能力，内容具体可落地，紧扣头盔治理主题。"
+            } else if (hasStrong && hasWeak) {
+                resBox.innerText = "【AI评价】⭐ 等级：水平二\n雷达图维度完整，具备强弱互补思路；方案逻辑通顺，但举措不够精准，细节存在瑕疵。"
+            } else {
+                resBox.innerText = "【AI评价】💡 等级：水平一\n仅完成基础任务，未清晰体现强项帮扶弱项，方案内容笼统，存在明显短板。"
+            }
+        }
+    </script>
+</body>
+</html>
