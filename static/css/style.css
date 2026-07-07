@@ -811,7 +811,14 @@ html[data-theme="dack"] .tag-chip:hover {
     width: 80px; 
     transform: translateY(-2px); 
     background: var(--icon-4-hover-color, 
-    rgb(255, 167, 161)); 
+    rgb(135, 198, 18)); 
+}
+
+.icon-QQ:hover { 
+    width: 80px; 
+    transform: translateY(-2px); 
+    background: var(--icon-4-hover-color, 
+    rgb(237, 162, 156)); 
 }
 
 .icon-bianlan:hover { 
