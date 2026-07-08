@@ -5,7 +5,7 @@
 
 /* ===== 控制台彩蛋 ===== */
 
-console.log('%c2026 chenyue.top  chenyue.art', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
+console.log('%c2026 chenyue.top  chenyue.art  chenyue.fun  chenyue.cyou', 'background-color: #ff00ff; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
 console.log('%c   /\\_/\\', 'color: #8B4513; font-size: 20px;');
 console.log('%c  ( o.o )', 'color: #8B4513; font-size: 20px;');
 console.log(' %c  > ^ <', 'color: #8B4513; font-size: 20px;');
@@ -524,7 +524,7 @@ function initDomainTip() {
     
     currentUrlEl.textContent = window.location.href;
     
-    var officialDomains = ['chenyue.top', 'chenyue.art:957', 'chenyue957.github.io'];
+    var officialDomains = ['chenyue.fun', 'chenyue.top','chenyue.art:957', 'chenyue.cyou','chenyue957.github.io'];
     var isOfficial = officialDomains.some(function(d) {
         return host.indexOf(d) !== -1;
     });
@@ -533,7 +533,7 @@ function initDomainTip() {
         officialLineEl.innerHTML = '当前访问：<span id="officialUrl">安全域名</span>';
         if (noMoreBtn) noMoreBtn.classList.add('highlight');
     } else {
-        officialLineEl.innerHTML = '推荐访问：<span id="officialUrl">https://chenyue.top</span>';
+        officialLineEl.innerHTML = '推荐访问：<span id="officialUrl">https://chenyue.fun</span>';
         if (noMoreBtn) noMoreBtn.classList.remove('highlight');
     }
     
@@ -570,30 +570,39 @@ function showDomainSelector() {
 function resolveSiteUrl(type) {
     const host = window.location.host;
     const pathname = window.location.pathname;
-    const isChenYueTop = host.includes('chenyue.top');
-    const isChenYueArt957 = host.includes('chenyue.art:957');
+    const isChenYueTOP = host.includes('chenyue.top');
+    const isChenYueFun = host.includes('chenyue.fun');
+    const isChenYueCyou = host.includes('chenyue.cyou');
+    const isChenYueArt = host.includes('chenyue.art:957');
     const isGithubHome = host.includes('github.io') && pathname.includes('/home/');
 
     switch (type) {
         case 'blog':
-            if (isChenYueTop) return 'https://blog.chenyue.top';
-            if (isChenYueArt957) return 'https://blog.chenyue.art:958';
+            if (isChenYueTOP) return 'https://blog.chenyue.top';
+            if (isChenYueFun) return 'https://blog.chenyue.fun';
+            if (isChenYueCyou) return 'https://blog.chenyue.cyou';
+            if (isChenYueArt) return 'https://blog.chenyue.art:958';
             if (isGithubHome) return 'https://chenyue957.github.io/blog/';
-            return 'https://blog.chenyue.top';
+            return 'https://blog.chenyue.fun';
         case 'intro':
-            if (isChenYueTop) return 'https://blog.chenyue.top/posts/你好我是尘钥chenyue/';
-            if (isChenYueArt957) return 'https://blog.chenyue.art:958/posts/你好我是尘钥chenyue/';
+            if (isChenYueTOP) return 'https://blog.chenyue.top/posts/你好我是尘钥chenyue/';
+            if (isChenYueFun) return 'https://blog.chenyue.fun/posts/你好我是尘钥chenyue/';
+            if (isChenYueCyou) return 'https://blog.chenyue.cyou/posts/你好我是尘钥chenyue/';
+            if (isChenYueArt) return 'https://blog.chenyue.art:958/posts/你好我是尘钥chenyue/';
             if (isGithubHome) return 'https://chenyue957.github.io/blog/posts/你好我是尘钥chenyue/';
-            return 'https://blog.chenyue.top/posts/你好我是尘钥chenyue/';
+            return 'https://blog.chenyue.fun/posts/你好我是尘钥chenyue/';
         case 'home':
-            if (isChenYueTop || isChenYueArt957 || isGithubHome) return '/';
-            return 'https://chenyue.top';
+            if (isChenYueTOP || isChenYueFun || isChenYueCyou || isChenYueArt || isGithubHome) return '/';
+            return 'https://chenyue.fun';
         case 'time':
-            if (host.includes('chenyue.art')) return 'https://time.chenyue.art:959';
-            if (isGithubHome) return '/time/';
-            return 'https://time.chenyue.top';
+            if (isChenYueTOP)    return 'https://time.chenyue.top';
+            if (isChenYueFun)    return 'https://time.chenyue.fun';
+            if (isChenYueCyou)   return 'https://time.chenyue.cyou';
+            if (isChenYueArt)    return 'https://time.chenyue.art:959';
+            if (isGithubHome)    return '/time/';
+            return 'https://time.chenyue.fun';
         default:
-            return 'https://chenyue.top';
+            return 'https://chenyue.fun';
     }
 }
 

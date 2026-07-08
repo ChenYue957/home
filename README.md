@@ -26,6 +26,6 @@
 
 ### 🔗 站点
 
-- 主站：[https://chenyue.top](https://chenyue.top/)
+- 主站：[https://chenyue.fun](https://chenyue.fun/)
 
-- 备用：[https://chenyue.art:957](https://chenyue.art:957)
+- 备线：[https://chenyue.art:957](https://chenyue.art:957)
