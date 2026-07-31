@@ -633,7 +633,19 @@ function resolveSiteUrl(type) {
 /* ===== MC 服务器状态检测 ===== */
 
 let allPlayers = [];
-let currentServer = 'frp'; // 默认使用穿透节点（IPv6 暂未开放）
+let currentServer = null; // 当前用于展示状态的节点 key
+
+/**
+ * 节点配置（按展示优先级排序，靠前的优先作为状态卡片数据源）
+ * key: 节点标识 / host: 地址 / dotId: 状态圆点元素 ID / label: 展示名称
+ */
+const MC_NODES = [
+    { key: 'frp',    host: 'mc.chenyue.art',   dotId: 'dotV4', label: '穿透' },
+    { key: 'ipv6',   host: 'mcv6.chenyue.art', dotId: 'dotV6', label: 'IPv6' },
+    { key: 'backup', host: 'mcb.chenyue.art',  dotId: 'dotB',  label: '备用' }
+];
+
+const MC_QUERY_TIMEOUT = 6000; // 单节点查询超时（毫秒）
 
 /**
  * 通用 MC 状态查询（带超时）
@@ -645,13 +657,18 @@ async function queryMCStatus(host, timeoutMs) {
     try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), timeoutMs);
-        
-        const res = await fetch('https://api.mcstatus.io/v2/status/java/' + host, {
+        const startTime = performance.now();
+
+        const res = await fetch('https://uapis.cn/api/v1/game/minecraft/serverstatus?server=' + host, {
             signal: controller.signal
         });
         clearTimeout(timeout);
-        
+
         const data = await res.json();
+        // API 不返回延迟，用请求往返耗时近似
+        if (data && typeof data.ping === 'undefined') {
+            data.ping = Math.round(performance.now() - startTime);
+        }
         return { success: !!(data && data.online), data };
     } catch (e) {
         return { success: false, error: e };
@@ -660,63 +677,56 @@ async function queryMCStatus(host, timeoutMs) {
 
 /**
  * 主检测函数
- * 策略：FRP 优先（当前在线），IPv6 作为备用快速探测
+ * 策略：并行探测所有节点，各自更新状态圆点；
+ * 状态卡片按 MC_NODES 优先级取第一个在线节点的数据，全部离线才显示离线。
  */
 async function checkMCStatus() {
     const statusCard = document.getElementById('mcStatus');
     const serverIcon = document.getElementById('mcServerIcon');
-    const dotV6 = document.getElementById('dotV6');
-    const dotV4 = document.getElementById('dotV4');
-    
     if (!statusCard) return;
-    
+
     const h1 = statusCard.querySelector('h1');
     const ping = statusCard.querySelector('.mcPing');
-    const playerList = document.getElementById('playerList');
-    
-    // 初始状态：都显示检测中
-    if (dotV6) dotV6.className = 'mcStatusDot checking';
-    if (dotV4) dotV4.className = 'mcStatusDot checking';
+
+    // 初始状态：所有节点圆点显示检测中
+    MC_NODES.forEach(node => {
+        const dot = document.getElementById(node.dotId);
+        if (dot) dot.className = 'mcStatusDot checking';
+    });
     h1.textContent = '检测中...';
     ping.textContent = '查询服务器状态...';
-    
-    // 先快速检测 FRP（主要通道，超时 5 秒）
-    const frpResult = await queryMCStatus('mc.chenyue.art', 5000);
-    
-    if (frpResult.success) {
-        // FRP 在线 → 直接使用，同时后台快速探测 IPv6
-        currentServer = 'frp';
-        updateStatus(frpResult.data, '穿透');
-        if (dotV4) { dotV4.classList.remove('checking'); dotV4.classList.add('online'); }
-        if (frpResult.data.icon && serverIcon) serverIcon.src = frpResult.data.icon;
-        
-        // 后台探测 IPv6（不阻塞主流程，2 秒超时）
-        queryMCStatus('mcv6.chenyue.art', 2000).then(v6Result => {
-            if (dotV6) {
-                dotV6.classList.remove('checking');
-                dotV6.classList.add(v6Result.success ? 'online' : 'offline');
+
+    let statusUpdated = false; // 状态卡片是否已被最快成功节点更新
+    let anyOnline = false;
+
+    // 并行探测所有节点，各自更新圆点；状态卡片取最快成功结果
+    const tasks = MC_NODES.map((node) =>
+        queryMCStatus(node.host, MC_QUERY_TIMEOUT).then(result => {
+            const dot = document.getElementById(node.dotId);
+            if (dot) {
+                dot.classList.remove('checking');
+                dot.classList.add(result.success ? 'online' : 'offline');
             }
-        });
-        return;
+
+            // 第一个成功返回的节点刷新状态卡片（最快成功优先）
+            if (result.success && !statusUpdated) {
+                statusUpdated = true;
+                anyOnline = true;
+                currentServer = node.key;
+                updateStatus(result.data, node.label);
+                if (result.data.favicon_url && serverIcon) serverIcon.src = result.data.favicon_url;
+            }
+            return result;
+        })
+    );
+
+    await Promise.all(tasks);
+
+    // 全部节点都离线
+    if (!anyOnline) {
+        currentServer = null;
+        updateOffline();
     }
-    
-    // FRP 失败 → 尝试 IPv6（给更多时间，5 秒）
-    const v6Result = await queryMCStatus('mcv6.chenyue.art', 5000);
-    
-    if (v6Result.success) {
-        currentServer = 'ipv6';
-        updateStatus(v6Result.data, 'IPv6');
-        if (dotV6) { dotV6.classList.remove('checking'); dotV6.classList.add('online'); }
-        if (dotV4) { dotV4.classList.remove('checking'); dotV4.classList.add('offline'); }
-        if (v6Result.data.icon && serverIcon) serverIcon.src = v6Result.data.icon;
-        return;
-    }
-    
-    // 都失败
-    currentServer = null;
-    updateOffline();
-    if (dotV6) { dotV6.classList.remove('checking'); dotV6.classList.add('offline'); }
-    if (dotV4) { dotV4.classList.remove('checking'); dotV4.classList.add('offline'); }
 }
 
 /**
@@ -733,9 +743,9 @@ function updateStatus(data, type) {
     statusCard.classList.add('online');
     statusCard.classList.remove('offline');
     h1.textContent = '服务器在线';
-    ping.textContent = `${type} | ${data.ping}ms | ${data.players.online}/${data.players.max}人`;
+    ping.textContent = `${type} | ${data.ping}ms | ${data.players}/${data.max_players}人`;
     
-    allPlayers = data.players.list || [];
+    allPlayers = data.online_players || [];
     renderPlayerList(playerList, allPlayers);
 }
 
@@ -751,7 +761,7 @@ function updateOffline() {
     statusCard.classList.add('offline');
     statusCard.classList.remove('online');
     h1.textContent = '服务器离线';
-    ping.textContent = 'IPv6 和穿透均不可用';
+    ping.textContent = '所有节点均不可用';
     playerList.innerHTML = '<span class="mcPlayerTag empty">暂无玩家</span>';
     allPlayers = [];
 }
@@ -766,18 +776,38 @@ function renderPlayerList(container, players) {
         container.innerHTML = '<span class="mcPlayerTag empty">暂无玩家</span>';
         return;
     }
-    
+
+    // 分离真实玩家和 carpet 假人
+    let realPlayers = [];
+    let botCount = 0;
+    for (let i = 0; i < players.length; i++) {
+        const p = players[i];
+        if (p.name === 'Anonymous Player' && p.uuid === '00000000-0000-0000-0000-000000000000') {
+            botCount++;
+        } else {
+            realPlayers.push(p);
+        }
+    }
+
     let html = '';
-    const showCount = Math.min(3, players.length);
-    
-    for (let i = 0; i < showCount; i++) {
-        html += `<span class="mcPlayerTag">${escapeHtml(players[i].name_clean)}</span>`;
+    const totalDisplay = realPlayers.length + (botCount > 0 ? 1 : 0);
+    const showCount = Math.min(3, totalDisplay);
+
+    // 先显示真实玩家
+    for (let i = 0; i < Math.min(showCount, realPlayers.length); i++) {
+        html += `<span class="mcPlayerTag">${escapeHtml(realPlayers[i].name)}</span>`;
     }
-    
-    if (players.length > 3) {
-        html += `<span class="mcPlayerTag more">+${players.length - 3}人</span>`;
+
+    // 再显示假人汇总（如果还有位置）
+    if (botCount > 0 && realPlayers.length < showCount) {
+        html += `<span class="mcPlayerTag">bot*${botCount}</span>`;
     }
-    
+
+    // 超出显示 +N
+    if (totalDisplay > 3) {
+        html += `<span class="mcPlayerTag more">+${totalDisplay - 3}人</span>`;
+    }
+
     container.innerHTML = html;
     container.onclick = () => openPlayerModal(players);
 }
@@ -793,14 +823,32 @@ function openPlayerModal(players) {
     const modal = document.getElementById('playerModal');
     const list = document.getElementById('modalPlayerList');
     const count = document.getElementById('playerCount');
-    
+
     if (!modal || !list || !count) return;
-    
+
+    // 分离真实玩家和 carpet 假人
+    let realPlayers = [];
+    let botCount = 0;
+    for (let i = 0; i < players.length; i++) {
+        const p = players[i];
+        if (p.name === 'Anonymous Player' && p.uuid === '00000000-0000-0000-0000-000000000000') {
+            botCount++;
+        } else {
+            realPlayers.push(p);
+        }
+    }
+
     count.textContent = players.length;
-    list.innerHTML = players.map(p => 
-        `<span class="mcModalPlayerTag">${escapeHtml(p.name_clean)}</span>`
+
+    let html = realPlayers.map(p => 
+        `<span class="mcModalPlayerTag">${escapeHtml(p.name)}</span>`
     ).join('');
-    
+
+    if (botCount > 0) {
+        html += `<span class="mcModalPlayerTag">bot*${botCount}</span>`;
+    }
+
+    list.innerHTML = html;
     modal.classList.add('active');
 }
 
@@ -865,7 +913,15 @@ function copyIp(text, tipId) {
 window.addEventListener('load', () => {
     var runMCCheck = function() {
         checkMCStatus();
-        setInterval(checkMCStatus, 30000); // 每 30 秒刷新一次
+        setInterval(() => {
+            // 页面在后台时跳过本轮刷新，省流量也避免无效请求
+            if (document.visibilityState === 'visible') checkMCStatus();
+        }, 30000); // 每 30 秒刷新一次
+
+        // 从后台切回前台时立即刷新一次
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') checkMCStatus();
+        });
     };
     
     // 优先使用 requestIdleCallback，不支持则回退到 setTimeout

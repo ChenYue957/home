@@ -1141,7 +1141,7 @@ html[data-theme="dack"] .tc-main {
 
 .mcServerList .projectItem {
     width: calc(50% - 60px);
-    height: 105px;
+    height: auto;
     opacity: 1;
     transform: none;
     transition-delay: 0s;
