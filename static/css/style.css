@@ -502,6 +502,16 @@ html[data-theme="dack"] .select-trigger {
     overflow: hidden;
 }
 
+.text-wrap{
+  display:flex;
+  flex-direction:column; 
+}
+
+.text-wrap h1{
+  margin:0;
+  gap: 2px;
+  font-size:13px;
+}
 
 /* ===== 兴趣标签 ===== */
 
