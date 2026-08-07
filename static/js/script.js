@@ -564,7 +564,7 @@ function showDomainSelector() {
 
 /**
  * 根据当前域名解析站点链接
- * @param {string} type - 链接类型：'blog' | 'intro' | 'home'
+ * @param {string} type - 链接类型：'blog' | 'intro' | 'home' | 'photo' | 'time'
  * @returns {string} 对应域名下的完整 URL
  */
 function resolveSiteUrl(type) {
@@ -594,6 +594,13 @@ function resolveSiteUrl(type) {
         case 'home':
             if (isChenYueTOP || isChenYueFun || isChenYueCyou || isChenYueArt || isGithubHome) return '/';
             return 'https://chenyue.fun';
+        case 'photo':
+            if (isChenYueTOP) return 'https://photo.chenyue.top';
+            if (isChenYueFun) return 'https://photo.chenyue.fun';
+            if (isChenYueCyou) return 'https://photo.chenyue.cyou';
+            if (isChenYueArt) return 'https://photo.chenyue.art:951';
+            if (isGithubHome) return 'https://chenyue957.github.io/photowall/';
+            return 'https://photo.chenyue.fun';
         case 'time':
             if (isChenYueTOP)    return 'https://time.chenyue.top';
             if (isChenYueFun)    return 'https://time.chenyue.fun';
@@ -621,6 +628,14 @@ function resolveSiteUrl(type) {
     } else {
         console.warn('homeLink 元素未找到');
     }
+
+    const photoLink = document.getElementById('photoLink');
+    if (photoLink) {
+        photoLink.href = resolveSiteUrl('photo');
+    } else {
+        console.warn('photoLink 元素未找到');
+    }
+
     const timeLink = document.getElementById('timeLink');
     if (timeLink) {
         timeLink.href = resolveSiteUrl('time');
